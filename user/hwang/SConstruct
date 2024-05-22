@@ -68,9 +68,12 @@ cctargets.build_cc(env_cc,glob_build,srcroot,bindir,libdir,pkgdir)
 # ------------------------ COMPILE CUDA PROGRAMS ---------------------------
 cuflags = env.get('CUDAFLAGS')
 culinkflags = ''
-cupppath = ''
-culibpath = ''
-culibs = ''
+# cupppath = ''
+# culibpath = ''
+# culibs = ''
+cupppath = env.get('CPPPATH')
+culibpath = env.get('LIBPATH')
+culibs = env.get('LIBS')
 # -------
 env_cu = env.Clone()
 nvcc = env.get('NVCC')
