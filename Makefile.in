@@ -1,9 +1,9 @@
 
 all:
-	$(SCONS)
+	$(SCONS) -j$(shell nproc)
 
 install:
-	$(SCONS) install
+	$(SCONS) -j$(shell nproc) install
 
 clean:
 	$(SCONS) -c
