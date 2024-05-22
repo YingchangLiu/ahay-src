@@ -238,6 +238,10 @@ def identify_platform(context):
                 plat['OS'] = 'linux'
                 plat['distro'] = 'ubuntu'
                 plat['version'] = dist_info[1]
+            elif dist_info[0].lower() == 'gentoo':
+                plat['OS'] = 'linux'
+                plat['distro'] = 'gentoo'
+                plat['version'] = dist_info[1]
             elif name[-7:] == 'generic':
                 plat['OS'] = 'linux'
                 plat['distro'] = 'ubuntu'
@@ -432,6 +436,7 @@ def rpc(context):
         or plat['distro'] == 'fedora'
         or (plat['distro'] == 'ubuntu' and int(plat['version'][:2]) >= 20)
         or plat['distro'] == 'arch'
+        or plat['distro'] == 'gentoo'
     ):
         context.env['CPPPATH'] = path_get(context,'CPPPATH','/usr/include/tirpc')
         LIBS.append('tirpc')
@@ -693,6 +698,7 @@ pkg['netpbm'] = {'cygwin':'libnetpbm-devel (Setup...Devel)',
                  'fedora':'netpbm-devel',
                  'centos':'netpbm-devel',
                  'suse'  :'libnetpbm-devel',
+                 'gentoo':'media-libs/netpbm',
                  'ubuntu':'libnetpbm10-dev'}
 
 def ppm(context):
@@ -780,6 +786,7 @@ pkg['libgd'] = {'suse':'gd-devel',
                 'arch': 'gd',
                 'alpine': 'gd-dev',
                 'ubuntu':'libgd-dev',
+                'gentoo':'media-libs/gd',
                 'centos':'gd-devel'}
 
 def gd(context):
@@ -833,6 +840,7 @@ pkg['plplot'] = {'fedora':'plplot-devel',
                  'darwin':'plplot',
                  'suse':'libplplot-devel',
                  'centos':'libplplot-devel + libtool-ltdl-devel',
+                 'gentoo':'sci-libs/plplot',
                  'ubuntu':'libplplot-dev'}
 
 def plplot(context):
@@ -1122,6 +1130,7 @@ def opengl(context):
 pkg['blas'] = {'fedora':'blas + blas-devel + atlas + atlas-devel',
                'rhel':'blas-devel + atlas-devel',
                'ubuntu':'libblas-dev',
+               'gentoo':'sci-libs/lapack',
                'centos':'blas-devel'}
 
 def blas(context):
@@ -1216,6 +1225,7 @@ def blas(context):
 pkg['lapack'] = {'fedora':'blas + blas-devel + atlas + atlas-devel',
                  'ubuntu': 'liblapack-dev',
                  'rhel':'blas-devel + atlas-devel',
+                 'gentoo':'sci-libs/lapack',
                  'centos':'lapack-devel'}
 
 def lapack(context):
@@ -1372,6 +1382,11 @@ def cuda(context):
             os.path.join(home, 'Apps', 'NVIDIA_CUDA_TOOLKIT'),
             os.path.join(home, 'Apps', 'CudaToolkit'),
             os.path.join(home, 'Apps', 'CudaTK'),
+            os.path.join('/opt', 'NVIDIA_CUDA_TOOLKIT'),
+            os.path.join('/opt', 'CUDA_TOOLKIT'),
+            os.path.join('/opt', 'cuda_toolkit'),
+            os.path.join('/opt', 'CUDA'),
+            os.path.join('/opt', 'cuda'),
             os.path.join('/usr', 'local', 'NVIDIA_CUDA_TOOLKIT'),
             os.path.join('/usr', 'local', 'CUDA_TOOLKIT'),
             os.path.join('/usr', 'local', 'cuda_toolkit'),
@@ -1440,6 +1455,7 @@ pkg['fftw'] = {'fedora':'fftw-devel',
                'rhel':'fftw-devel',
                'ubuntu':'libfftw3-dev',
                'centos':'fftw-devel',
+               'gentoo':'sci-libs/fftw',
                'darwin':'fftw-3-single'}
 
 def fftw(context):
