@@ -129,7 +129,7 @@ def clean_and_mkdir_local(hcp, pagelist):
             (f_nm, f_ext) = os.path.splitext(f)
             if f_ext == hcp['ext']:
                 if f_nm not in pagelist:
-	            os.remove(os.path.join(d,f))
+                    os.remove(os.path.join(d,f))
     else: # local dir does not exist
         os.mkdir(d)
 
@@ -164,10 +164,10 @@ def get_wiki_image_dict(hcp, verb):
     p3 = '(<a href="/%s/%s/' % (hcp['wiki_basenm'],hcp['imgdir_basenm'])
 
     for item in list1:
-	    s = after(before(after(item,p1),p2),p3)
-	    if s != '':
-	        (filepath, filename) = os.path.split(s)
-	        imgdict[filename] = filepath
+        s = after(before(after(item,p1),p2),p3)
+        if s != '':
+            (filepath, filename) = os.path.split(s)
+            imgdict[filename] = filepath
 
     ivlad.msg('...done', verb)
     return imgdict
@@ -181,11 +181,11 @@ def inspect_imgs(hcp, wiki_img_dict):
     wiki_img_list    = sorted(wiki_img_dict.keys())
     for img in local_img_list:
         if img in wiki_img_list:
-	    # Do not download image again. Imgs practically never change, and
-	    # bandwidth costs Madagascar community members after-tax money
+        # Do not download image again. Imgs practically never change, and
+        # bandwidth costs Madagascar community members after-tax money
             del wid[img]
-	else: # image has been removed from the wiki. remove locally too
-	    os.path.remove(os.path.join(hcp['imgdir_local'],img))
+    else: # image has been removed from the wiki. remove locally too
+        os.path.remove(os.path.join(hcp['imgdir_local'],img))
     imgs_to_download = {}
     for i in wid:
         url    = hcp['imgdir_url'] + '/' + wid[i] + '/' + i
@@ -203,8 +203,8 @@ def build_wiki_img_repl_dict(hcp, wiki_img_dict):
     s2 = 'src="./%s/' % hcp['imgdir_basenm']
     for img in widk:
         to_be_replaced = s1 + wiki_img_dict[img] + '/' + img
-	replacement    = s2 + img
-        wiki_img_repl_dict[to_be_replaced] = replacement
+    replacement    = s2 + img
+    wiki_img_repl_dict[to_be_replaced] = replacement
     return wiki_img_repl_dict
 
 ###############################################################################
