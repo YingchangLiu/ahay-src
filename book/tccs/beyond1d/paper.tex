@@ -28,15 +28,15 @@ Seeking to understand and quantify the first-order effects from lateral heteroge
 
 Assuming that the slowness (1/velocity) varies slowly in the midpoint direction and can be approximated as a Taylor series, \cite{lynnclaerbout} studied the second-order traveltime derivative in a single horizontal isotropic layer with laterally varying velocity. A similar idea was used by \cite{grechkatsvankinlatvar} on the group slowness to study the second-order traveltime derivative in one- and two-layered anisotropic models with laterally varying medium parameters. \cite{takanashitsvankin11} and \cite{takanashitsvankin12} extended the results of \cite{grechkatsvankinlatvar} to multi-layer anisotropic models with horizontal boundary interfaces (except at the target reflector) and proposed a correction algorithm for removing the effects of embedded velocity anomalies from reflection data. However, the effects from curved reflectors at intermediate interfaces are not considered in these methods.
 
+Apart from moveout analysis, it is also important to note that there is another time-domain processing technique whose governing parameters can be related to one-way traveltime derivatives of some special ray---namely time migration. While moveout analysis relies on its connection to the one-way traveltime derivatives of the normal-incidence ray, time migration relies on its connection to the one-way traveltime derivatives of the \textit{image ray} \cite[]{hubralimageray}. The former denotes the ray that has zero phase slownesses tangent to the reflector, whereas the latter denotes the ray the has zero phase slownesses tangent to the recording surface (Figure~\ref{fig:vertical}). For the image ray, the second-order derivative of the one-way (upward) traveltime is related to time-migration velocity, which serves as the basis for time-domain imaging (i.e, collecting contributions along the corresponding diffraction traveltime curve) and also for studying diffraction imaging \cite[]{fomeldiffrac,resheflanda}. Both normal-incidence and image rays may also coincide in some special cases, for example, in a horizontal anisotropic layer with horizontal symmetry plane such as a transversely isotropic medium with vertical symmetry axis (VTI), an orthorhombic medium (ORT), and a monoclinic medium, where both rays become vertical. We note that several researchers have previously studied the process of time migration when underlying velocity models are ‘weakly’ laterally heterogeneous and some developments were reviewed by \cite{cam}, \cite{schleicher} and \cite{iversen}. However, in this study, we shall present an alternative approach to this problem based on an integrated use of Fermat’s principle and approximate lateral hetergogeneity effects.
+
 \inputdir{.}
 \plot{vertical}{width=0.9\textwidth}{The ray configuration as the basis for computing the traveltime derivatives. We use the vertical ray in a 1-D anisotropic medium at the $\mathbf{x}_0$ location as the reference for the normal-incidence ray and the image ray in the cases of reflection and diffraction traveltimes, respectively.}
-
-Apart from moveout analysis, it is also important to note that there is another time-domain processing technique whose governing parameters can be related to one-way traveltime derivatives of some special ray---namely time migration. While moveout analysis relies on its connection to the one-way traveltime derivatives of the normal-incidence ray, time migration relies on its connection to the one-way traveltime derivatives of the \textit{image ray} \cite[]{hubralimageray}. The former denotes the ray that has zero phase slownesses tangent to the reflector, whereas the latter denotes the ray the has zero phase slownesses tangent to the recording surface (Figure~\ref{fig:vertical}). For the image ray, the second-order derivative of the one-way (upward) traveltime is related to time-migration velocity, which serves as the basis for time-domain imaging (i.e, collecting contributions along the corresponding diffraction traveltime curve) and also for studying diffraction imaging \cite[]{fomeldiffrac,resheflanda}. Both normal-incidence and image rays may also coincide in some special cases, for example, in a horizontal anisotropic layer with horizontal symmetry plane such as a transversely isotropic medium with vertical symmetry axis (VTI), an orthorhombic medium (ORT), and a monoclinic medium, where both rays become vertical. We note that several researchers have previously studied the process of time migration when underlying velocity models are ‘weakly’ laterally heterogeneous and some developments were reviewed by \cite{cam}, \cite{schleicher} and \cite{iversen}. However, in this study, we shall present an alternative approach to this problem based on an integrated use of Fermat’s principle and approximate lateral hetergogeneity effects.
 
 The fundamental dependency of time-domain processing techniques on the one-way traveltime derivatives of both the normal-incidence ray and the image ray encourages a thorough study on their behaviors under influences from lateral heterogeneity. In this paper, we focus on the \textit{forward} problem and propose a general unified framework for computing one-way traveltime derivatives in the presence of 'weak' lateral heterogeneity from both curved interfaces and smoothly variable medium parameters in a multi-layered anisotropic medium. We rely on the fundamental ideas from \cite{blias1981}, \cite{lynnclaerbout}, and \cite{bliasgrit1984} to extend the theory to work with perturbations from background 1-D anisotropic medium and demonstrate its connections to existing theories. Particularly, qe show that the effects from lateral heterogeneity in each anisotropic sublayer can be approximately quantified by the Taylor expansions of interface surfaces and layer group velocities with respect to the 1-D background. Their cumulative effect along the (normal-incidence or image) ray path can then be computed using an exact recursion derived from the Fermat's principle instead of an approximate summation previously used. We test our proposed theory by demonstrating improvements in reflection and diffraction traveltime predictions. In view of these results, we discuss potential applications of this theoretical study such as improving Dix inversion to honor the effects from lateral heterogeneity when inverting for interval parameters. 
 
 \section{Traveltime in general 2-D layered media}
-We consider a multi-layered model, where the total one-way traveltime from the fixed source $\mathbf{x}_0= \big(x_0,f_0(x_0)\big)$ on the interface $f_0$ to the receiver $\mathbf{x}_{n+1}= \big(x_{n+1},f_{n+1}(x_{n+1})\big)$ on the interface $f_{n+1}$ can be written as
+We consider a 2-D multi-layer model, where the total one-way traveltime from the fixed source $\mathbf{x}_0= \big(x_0,f_0(x_0)\big)$ on the interface $f_0$ to the receiver $\mathbf{x}_{n+1}= \big(x_{n+1},f_{n+1}(x_{n+1})\big)$ on the interface $f_{n+1}$ can be written as
 \begin{equation}
   \label{eq:sum}
   t(\mathbf{x}_0,\mathbf{x}_{n+1}) = t_0\big(\mathbf{x}_0,\mathbf{x}_{1}(h)\big) + \sum\limits_{k=1}^{n} t_{k}\big(\mathbf{x}_k(h),\mathbf{x}_{k+1}(h)\big)~,  
@@ -77,12 +77,12 @@ where $T$ is the one-way zero-offset traveltime from the point $\mathbf{x_0}$ on
 \end{equation}
 where $\hat{T}$ is the one-way vertical traveltime from the point scatterer $\mathbf{x_0}$ to the surface and we replace $h$ with $\hat{x} = x_{n+1}-x_0$. Even though $h$ and $\hat{x}$ have the same mathematical expression, they represent two different quantities. In case of reflection traveltime, it is common to use $h$ to denote half-offset. On the other hand, in consideration of diffraction traveltime, we use $\hat{x}$ here to denote the distance between the escape location $x_0$ of image ray and any surrounding point $x$ on the surface. We give a brief review on the derivation of equations~\ref{eq:vnmo} and \ref{eq:vm} in Appendix A.
 
-Because both NMO velocity (equation~\ref{eq:vnmo}) for reflection traveltime and time-migration velocity (equation~\ref{eq:vm}) for diffraction traveltime are related to the one-way traveltime derivative of a ray (either normal-incidence or image ray), it is, in principle, sufficient to study the effects from lateral heterogeneity on such derivative of a generic ray travelling between a subsurface position and the surface. In the following section, we first look at how the desired second-order one-way traveltime derivative evaluated at the surface (equation~\ref{eq:dnt}) is related to the derivatives of $t_k$ in each sublayer based on the Fermat's principle. This relationship will be used to accumulate the total effects of lateral heterogeneity from all sublayers.
+Because both NMO velocity (equation~\ref{eq:vnmo}) for reflection traveltime and time-migration velocity (equation~\ref{eq:vm}) for diffraction traveltime are related to the one-way traveltime derivative of a ray (either normal-incidence or image ray), it is, in principle, sufficient to study the effects from lateral heterogeneity on such derivative of a generic ray travelling between a subsurface position and the surface. We shall adopt this notion in this paper and begin our study by first looking at how the desired second-order one-way traveltime derivative evaluated at the surface (equation~\ref{eq:dnt}) is related to the derivatives of $t_k$ in each sublayer based on the Fermat's principle. This relationship will be used to accumulate the total effects of lateral heterogeneity from all sublayers.
 
 
 \subsection{A recursive formula from Fermat's principle}
 
-To understand how the contribution from each sublayer influences the desired second-order traveltime derivative at the surface, we follow the notion of \cite{blias1981}, \cite{bliasgrit1984}, \cite{gritsenko}, and \cite{goldin} and establish the connections between the second-order traveltime derivatives evaluated at different interfaces using the Fermat's principle. According to the Fermat's principle, the total traveltime $t$ has to be stationary with respect to $x_k$ for $k=1,2,\ldots,n$, leading to
+To understand how the contribution from each sublayer influences the desired second-order traveltime derivative at the surface, we follow the notion of \cite{blias1981}, \cite{bliasgrit1984}, \cite{gritsenko}, and \cite{goldin} and establish the connections between the second-order traveltime derivatives evaluated at different interfaces using the Fermat's principle, which states that the total traveltime $t$ has to be stationary with respect to $x_k$ for $k=1,2,\ldots,n$, leading to
 \begin{equation}
 \label{eq:fermat}
 \frac{\partial t}{\partial x_k}=0~.
@@ -107,7 +107,7 @@ which can be used to compute the desired second-order traveltime derivative (${\
 \label{eq:recursion}
  r_k = \left. \left( \frac{d x_k}{d h}\right) \middle/ \left( \frac{d x_{k+1}}{d h}\right)\right. = \left. -\left( \frac{\partial^2 t_k}{\partial x_k \partial x_{k+1}} \right) \middle/ \left(  r_{k-1} \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial x_k}  + \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k^2} \right)\right. ~,
 \end{equation}
-with $k = 1, \dots, n$. Note that because $h=x_{n+1}-x_0$ and $x_0$ is independent of $h$ by definition, $dx_0/dh = 0$ and $dx_{n+1}/dh = 1$, which lead to $r_0 = 0$ and $r_n = dx_{n}/dh$. Equations~\ref{eq:d2t} and \ref{eq:recursion} suggest that the desired second-order traveltime derivative at the surface can be computed by collecting the contributions from derivatives on $t_k$ from different sublayers through a recursion. The detailed derivation of equations~\ref{eq:d2t} and \ref{eq:recursion} can be found in Appendix B where we proceed from a simple two-layered case originally studied by \cite{blias1981}, \cite{bliasgrit1984}, \cite{gritsenko}, and \cite{goldin} to the generalized results for multi-layered case in equations~\ref{eq:d2t} and \ref{eq:recursion}. Previously, only the two-layered version of this recursion was adopted and an approximate summation of contributions rather than a recursion was used. We review this proposition in Appendix C and discuss some connections to the exact recursion studied here.
+with $k = 1, \dots, n$. Note that because $h=x_{n+1}-x_0$ and $x_0$ is independent of $h$ by definition, $dx_0/dh = 0$ and $dx_{n+1}/dh = 1$, which lead to $r_0 = 0$ and $r_n = dx_{n}/dh$. Equations~\ref{eq:d2t} and \ref{eq:recursion} suggest that the desired second-order traveltime derivative at the surface can be computed by collecting the contributions from derivatives on $t_k$ from different sublayers through a recursion. The general results for multi-layer media in equations~\ref{eq:d2t} and \ref{eq:recursion} represent a direct extension of the original findings for two-layer media by \cite{blias1981}, \cite{bliasgrit1984}, \cite{gritsenko}, and \cite{goldin}. Previously, only the two-layer version of this recursion was adopted and an approximate summation of contributions rather than a recursion was used. We review this proposition in Appendix C and discuss some connections to the exact recursion studied here.
 
 Equations~\ref{eq:d2t} and \ref{eq:recursion} represent a framework for computing the desired second-order total one-way traveltime derivative at the surface ($\partial^2 t/\partial h^2$) from second-order one-way traveltime derivatives corresponding to different sublayers ($t_k$). In the next section, we introduce lateral heterogeneity effects for interfaces $f_k$ and the group slowness $w_k$ to the traveltime in each sublayer $t_k$ in equation~\ref{eq:owtimehor}. We subsequently compute the derivatives on $t_k$ that include both effects, which can then be used by recursion~\ref{eq:recursion}.
 
@@ -222,16 +222,16 @@ Next, we consider multi-layered media, where the accumulation of lateral heterog
 
 
 \subsubsection{Layered anisotropic model}
-
 \inputdir{aniso}
+
+We consider first a layered anisotropic model in Figure~\ref{fig:modcol} with parameters shown in Table~\ref{tbl:modelaniso}. The model contains both a synclinal structure and a variable dipping layer that can lead to noticeable effects from lateral heterogeneity. Each layer in this model is homogeneous, hence only the effects from curved interfaces (derivatives of $F$) are important. We note that the depths of the top three reflectors are smaller than 2 $km$, which is the spread length of offset in this experiment. Therefore, the offset-to-depth ratio is greater than unity and additional effects of moveout nonhyperbolicity caused by anisotropy are important \cite[]{tsvankinbook}. As a result, possible improvement from modifying the NMO velocity proposed under the hyperbolic traveltime assumption in this study may not be as prominent for these three reflectors. 
+
 \plot{modcol}{width=0.75\columnwidth}{A test subsurface model with a synclinal structure and a variable dipping interface. The solid black line indicates the location of the extracted CMP gather.}
 
-\begin{table*}
-%\begin{minipage}{80mm}
-\caption{Anisotropic parameters for the model in Figure~\ref{fig:modcol}. The values for layer 2, 4, and 5 are taken from rock samples measurements by \cite{wang}, \cite{jw}, and \cite{vernik}, respectively. $Q_1$ and $Q_3$ are anelliptic parameters in the Muir-Dellinger scheme convenient for uses in group velocity approximations \cite[]{zoneortho}.}
-\label{tbl:modelaniso}
+\tabl{modelaniso}{Anisotropic parameters for the model in Figure~\ref{fig:modcol}. The values for layer 2, 4, and 5 are taken from rock samples measurements by \cite{wang}, \cite{jw}, and \cite{vernik}, respectively. $Q_1$ and $Q_3$ are anelliptic parameters in the Muir-Dellinger scheme convenient for uses in group velocity approximations \cite[]{zoneortho}.}{
     \centering
-	\resizebox{\columnwidth}{!}{
+	%\resizebox{\columnwidth}{!}
+	{
      \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|}
      	     \hline Anisotropic parameters & $ c_{11}$ & $ c_{33}$ & $ c_{13}$ & $ c_{55}$ & $ Q_{1}$ & $ Q_{3} $ & $ v_{P0} $ & $ v_{S0} $ & $ \epsilon$ & $ \delta $\\ 
      	     \hline Layer 1 & 9.0 & 9.0 & 3.0 & 3.0 & 1.0 & 1.0 & 3.0 & 1.732 & 0.0 & 0.0\\
@@ -243,26 +243,23 @@ Next, we consider multi-layered media, where the accumulation of lateral heterog
     \end{tabular}
     }
 %\end{minipage}
-\end{table*}
-
-We consider first a layered anisotropic model in Figure~\ref{fig:modcol} with parameters shown in Table~\ref{tbl:modelaniso}. The model contains both a synclinal structure and a variable dipping layer that can lead to noticeable effects from lateral heterogeneity. Each layer in this model is homogeneous, hence only the effects from curved interfaces (derivatives of $F$) are important. We note that the depths of the top three reflectors are smaller than 2 $km$, which is the spread length of offset in this experiment. Therefore, the offset-to-depth ratio is greater than unity and additional effects of moveout nonhyperbolicity caused by anisotropy are important \cite[]{tsvankinbook}. As a result, possible improvement from modifying the NMO velocity proposed under the hyperbolic traveltime assumption in this study may not be as prominent for these three reflectors. 
-
-\multiplot{2}{hypercompareaniso2,warpedcompareaniso2}{height=0.35\textheight}{(a) An example CMP gather from the layered anisotropic model at 4.3 $km$. Note the multiple reflection events above the second moveout curve that are caused by the syncline. The solid lines correspond to regular moveout predictions based on the assumption of 1-D stratified model, whereas the dashed lines correspond to those from the proposed framework that takes into account the effects from heterogeneity. (b) Flattened reflections from the bottom interface using the NMO velocity with 1-D assumption (top) and the proposed framework (bottom). We can clearly observe improved flatness from using the proposed framework.}
+}
 
 Figure~\ref{fig:hypercompareaniso2,warpedcompareaniso2} shows the CMP gather at 4.3 $km$ that compares moveout approximations with NMO velocity computed based on the 1-D stratified medium assumption and from the proposed formula (equation~\ref{eq:d2t}). For the bottom two reflectors with the offset-to-depth ratio smaller than unity, we can observe a better performance from the latter with improved flatness of the corrected gather.
 
+\multiplot{2}{hypercompareaniso2,warpedcompareaniso2}{height=0.35\textheight}{(a) An example CMP gather from the layered anisotropic model at 4.3 $km$. Note the multiple reflection events above the second moveout curve that are caused by the syncline. The solid lines correspond to regular moveout predictions based on the assumption of 1-D stratified model, whereas the dashed lines correspond to those from the proposed framework that takes into account the effects from heterogeneity. (b) Flattened reflections from the bottom interface using the NMO velocity with 1-D assumption (top) and the proposed framework (bottom). We can clearly observe improved flatness from using the proposed framework.}
 
 \subsubsection{Layered isotropic model with velocity gradient}
-
 \inputdir{isograd2}
+
+Next, we test the proposed framework in a layered isotropic model with a constant horizontal velocity gradient in each sublayer (equation~\ref{eq:vgrad}). The model structure is similar to the previous case (Figure~\ref{fig:modcol}) and the model parameters are given in Table~\ref{tbl:modeliso}. In this example, both effects from the curved reflectors (derivatives of $F$) and the laterally varying slowness (derivatives of $W$) are important. Figure~\ref{fig:hypercompare2,warpedcompare2} shows the CMP gather at 4.3 $km$ that compares the predicted moveout curves based on the 1-D assumption with those from the proposed framework that honor the effects of heterogeneity. We can again observe an improved flatness of moveout-corrected gather from the latter.
+
 \multiplot{2}{hypercompare2,warpedcompare2}{height=0.35\textheight}{(a) An example CMP gather from the layered isotropic model at 4.3 $km$. Note the multiple reflection events above the second moveout curve that are caused by the syncline. The solid lines correspond to regular moveout predictions based on the assumption of 1-D stratified model, whereas the dashed lines correspond to those from the proposed framework that takes into account the effects from heterogeneity. (b) Flattened reflections from the bottom interface using the NMO velocity with 1-D assumption (top) and the proposed framework (bottom). We can clearly observed improved flatness from using the proposed framework.}
 
-\begin{table*}
-%\begin{minipage}{80mm}
-\caption{Model parameters for the layered isotropic model. The reference velocity at 3 $km$ and horizontal velocity gradient.}
-\label{tbl:modeliso}
+\tabl{modeliso}{Model parameters for the layered isotropic model. The reference velocity at 3 $km$ and horizontal velocity gradient.}{
     \centering
-    \resizebox{0.5\columnwidth}{!}{
+    %\resizebox{0.5\columnwidth}{!}
+    {
      \begin{tabular}{|c|c|c|}
      	     \hline  & $ v$ $(km/s)$ & Gradient $(1/s)$ \\ 
      	     \hline Layer 1 & 2.50 & -0.06\\
@@ -274,52 +271,48 @@ Figure~\ref{fig:hypercompareaniso2,warpedcompareaniso2} shows the CMP gather at 
     \end{tabular}
     }
 %\end{minipage}
-\end{table*}
-
-
-
-Next, we test the proposed framework in a layered isotropic model with a constant horizontal velocity gradient in each sublayer (equation~\ref{eq:vgrad}). The model structure is similar to the previous case (Figure~\ref{fig:modcol}) and the model parameters are given in Table~\ref{tbl:modeliso}. In this example, both effects from the curved reflectors (derivatives of $F$) and the laterally varying slowness (derivatives of $W$) are important. Figure~\ref{fig:hypercompare2,warpedcompare2} shows the CMP gather at 4.3 $km$ that compares the predicted moveout curves based on the 1-D assumption with those from the proposed framework that honor the effects of heterogeneity. We can again observe an improved flatness of moveout-corrected gather from the latter.
+}
 
 \subsubsection{Hess VTI model}
-
 \inputdir{hess}
-\multiplot{2}{vpline,deltaline}{width=0.65\columnwidth}{(a)  Hess VTI model (a) Vertical P-wave velocity and (b) Thomsen's $\delta$ with the considered CMP location indicated by the solid white line.}
 
 For the final example, we consider the Hess VTI model shown in Figure~\ref{fig:vpline,deltaline} and one of its raw CMP gathers at 11.17 $km$. Due to the well-known limited applicability of time processing in geologically complex media, we only focus at the structure around this CMP gather. This choice allows us to test our approach in a realistic layered anisotropic model, while ensuring that time processing remains applicable. We focus on the effects of curved overburden layers related to the salt structure on reflection traveltime and the corresponding NMO velocity. In this model, the top two layers are isotropic, whereas the third and fourth layers are weakly anisotropic with $\delta=0.051$ and 0.105, respectively. To ensure an agreement with the condition of offset-to-depth ratio smaller than unity, the offset range up to approximately 2.5 $km$ can be considered for the reflection from the bottom of the fourth layer.
 
-\plot{hypercomparehess3}{width=0.75\columnwidth}{An example raw CMP gather from the Hess VTI model at 11.17 $km$. The solid lines correspond to regular moveout predictions based on the assumption of 1-D stratified model, whereas the dashed lines correspond to those from the proposed framework that takes into account the effects from heterogeneity. We can observe a better fitting from the latter.}
+\multiplot{2}{vpline,deltaline}{width=0.65\columnwidth}{(a)  Hess VTI model (a) Vertical P-wave velocity and (b) Thomsen's $\delta$ with the considered CMP location indicated by the solid white line.}
 
 Figure~\ref{fig:hypercomparehess3} shows the CMP gather up to 4.8 $km$ offset range overlain by moveout approximations with NMO velocity computed based on the 1-D stratified medium assumption and from the proposed formula (equation~\ref{eq:d2t}). Focusing on the fourth reflection corresponding to the prominently curved interface, we can observe that the new effective NMO velocity from the proposed method can describe the true reflection traveltime with a higher noticeable accuracy in the range of the offset-to-depth ratio limit (up to 2.5 $km$). However, even though for this particular reflection from this model, the conclusion seems to also hold beyond 2.5 $km$ offset range, similar observation cannot be made for the third reflection event.
 
+\plot{hypercomparehess3}{width=0.75\columnwidth}{An example raw CMP gather from the Hess VTI model at 11.17 $km$. The solid lines correspond to regular moveout predictions based on the assumption of 1-D stratified model, whereas the dashed lines correspond to those from the proposed framework that takes into account the effects from heterogeneity. We can observe a better fitting from the latter.}
 
 \subsection{Diffraction traveltime in multilayer media}
-In this section, we turn our attention to the case of diffraction traveltime and apply the proposed framework to compute the effective time-migration velocity that honors the effects from lateral heterogeneity (equation~\ref{eq:vm}). Following similar procedure as before, we first evaluate the new expressions of traveltime derivatives in each sublayer above a point diffractor (equation~\ref{eq:dthet}) and evaluate the proposed recursive relationship (equations~\ref{eq:d2t} and \ref{eq:recursion}). We finally compute equation~\ref{eq:vm} using the result from the recursion. We consider the same structural model shown in Figure~\ref{fig:modcol} but replace the bottommost reflector by a point diffractor at 4.3 $km$.
+In this section, we turn our attention to the case of diffraction traveltime and apply the proposed framework to compute the effective time-migration velocity that honors the effects from lateral heterogeneity (equation~\ref{eq:vm}). The synthetic data are generated from Kirchhoff modeling using an accurate two-point ray bending scheme \cite[]{zonetwopoint}.
+
+Following similar procedure as before, we first evaluate the new expressions of traveltime derivatives in each sublayer above a point diffractor (equation~\ref{eq:dthet}) and evaluate the proposed recursive relationship (equations~\ref{eq:d2t} and \ref{eq:recursion}). We finally compute equation~\ref{eq:vm} using the result from the recursion. We consider the same structural model shown in Figure~\ref{fig:modcol} but replace the bottommost reflector by a point diffractor at 4.3 $km$.
 
 
 \subsubsection{Layered anisotropic model with a point diffractor}
-
 \inputdir{anisodiffraction}
+
+We first consider a similar layered anisotropic model. We limit our consideration of the zero-offset section to a small area around 4.3 $km$ to ensure the validity of the underlying hyperbolic traveltime approximation for time migration. Figure~\ref{fig:hypercompareanisodiff3} shows the zero-offset section around the point diffractor before time migration with two hyperbolic summation curves generated with migration velocities from the 1-D assumption and from the proposed method. The flattened diffraction travelime hyperbolas with both velocities are shown in Figure~\ref{fig:warpedhypercompareaniso3}, which indicates a better performance of traveltime prediction from the proposed approach. The results from zero-offset Kirchhoff migration is shown in Figure~\ref{fig:migcompareaniso} with the focusing comparison shown in Figure~\ref{fig:envcompareaniso}. We employ a computation of signal envelope to indicate which diffraction responses is better focused. The higher the value of the envelope magnitude at the center, the better focused the response is. The shape of the envelope pattern also qualitatively indicates the degree of symmetry of the distributed energy. We observe a superior diffraction response with higher focusing and more symmetric envelope from the proposed method.
+
 \multiplot{2}{hypercompareanisodiff3,warpedhypercompareaniso3}{height=0.4\textheight}{(a) An example zero-offset section from the layered anisotropic model around 4.3 $km$. The solid lines correspond to regular hyperbolic summation curve based on the assumption of 1-D stratified model, whereas the dashed lines correspond to that from the proposed framework that takes into account the effects from lateral heterogeneity. (b) Flattened diffraction events using the migration velocity with 1-D assumption (top) and the proposed framework (bottom). We can clearly observe improved flatness from using the proposed framework, which indicates a better traveltime prediction and in turn, a more focused migrated response.}
 
 \plot{migcompareaniso}{width=0.75\columnwidth}{A zero-offset migrated section for the layered anisotropic model. The resultant point diffractor appears to be better focused from the proposed method (right) than from the regular migration velocity based on 1-D assumption (left).}
 
 \plot{envcompareaniso}{width=0.65\columnwidth}{A focusing comparison of migrated point diffractors for the layered anisotropic model. The proposed method leads to a higher magnitude of the focusing at the center and a more symmetric response, which indicates its superior performance.}
 
-We first consider a similar layered anisotropic model. We limit our consideration of the zero-offset section to a small area around 4.3 $km$ to ensure the validity of the underlying hyperbolic traveltime approximation for time migration. Figure~\ref{fig:hypercompareanisodiff3} shows the zero-offset section around the point diffractor before time migration with two hyperbolic summation curves generated with migration velocities from the 1-D assumption and from the proposed method. The flattened diffraction travelime hyperbolas with both velocities are shown in Figure~\ref{fig:warpedhypercompareaniso3}, which indicates a better performance of traveltime prediction from the proposed approach. The results from zero-offset Kirchhoff migration is shown in Figure~\ref{fig:migcompareaniso} with the focusing comparison shown in Figure~\ref{fig:envcompareaniso}. We employ a computation of signal envelope to indicate which diffraction responses is better focused. The higher the value of the envelope magnitude at the center, the better focused the response is. The shape of the envelope pattern also qualitatively indicates the degree of symmetry of the distributed energy. We observe a superior diffraction response with higher focusing and more symmetric envelope from the proposed method.
-
-
 \subsubsection{Layered isotropic model with velocity gradient and a point diffractor}
+\inputdir{diffraction}
 
 In the final example, we consider a similar layered isotropic model with velocity gradient . Again, both effects from the curved reflectors (derivatives of $F$) and the laterally varying slowness (derivatives of $W$) are important in this example. To ensure that the image ray is close to the reference vertical ray, we reduce the magnitude of the gradients to 30 $\%$ of the original values (Table~\ref{tbl:modeliso}). 
 
-\inputdir{diffraction}
+Figure~\ref{fig:hypercomparediff3} shows a zero-offset data around the point diffractor before migration overlain by two hyperbolic summation curves generated with migration velocities from the 1-D assumption and from the proposed method. The corresponding flattened diffraction travelime hyperbolas are shown in Figure~\ref{fig:warpedhypercompare3}, which suggests a superior performance in traveltime prediction from the proposed method. Figure~\ref{fig:migcompare} shows the results from zero-offset Kirchhoff migration and Figure~\ref{fig:envcompare} shows their envelope focusing comparison. Similarly to the layered anisotropic case, we observe a superior diffraction response with higher and more symmetric focusing from the proposed method.
+
 \multiplot{2}{hypercomparediff3,warpedhypercompare3}{height=0.4\textheight}{An example zero-offset section from the layered isotropic model around 4.3 $km$. The solid lines correspond to regular hyperbolic summation curve based on the assumption of 1-D stratified model, whereas the dashed lines correspond to that from the proposed framework that takes into account the effects from lateral heterogeneity.  (b) Flattened diffraction events using the migration velocity with 1-D assumption (top) and the proposed framework (bottom). We can clearly observe improved flatness from using the proposed framework, which indicates a better traveltime prediction and in turn, a more focused migrated response.}
 
 \plot{migcompare}{width=0.75\columnwidth}{A zero-offset migrated section for the layered isotropic model. The resultant point diffractor appears to be better focused from the proposed method (right) than from the regular migration velocity based on 1-D assumption (left).}
 
 \plot{envcompare}{width=0.65\columnwidth}{A focusing comparison of migrated point diffractors for the layered isotropic model. The proposed method leads to a higher magnitude of the central focusing at the center and a more symmetric response, which indicates its superior performance.}
-
-Figure~\ref{fig:hypercomparediff3} shows a zero-offset data around the point diffractor before migration overlain by two hyperbolic summation curves generated with migration velocities from the 1-D assumption and from the proposed method. The corresponding flattened diffraction travelime hyperbolas are shown in Figure~\ref{fig:warpedhypercompare3}, which suggests a superior performance in traveltime prediction from the proposed method. Figure~\ref{fig:migcompare} shows the results from zero-offset Kirchhoff migration and Figure~\ref{fig:envcompare} shows their envelope focusing comparison. Similarly to the layered anisotropic case, we observe a superior diffraction response with higher and more symmetric focusing from the proposed method.
 
 \section{Discussion}
 %The proposed formulation is general and can be related to the previous work of \cite{blias2006} by making an additional assumption ---consider each interface individually and assume that only the intersection point $\mathbf{x}$ on the current reflector vary with offset $h$ but other intersection points don't. This results in a simple summation in equation~\ref{eq:d2t} instead of a recursion. 
@@ -369,40 +362,36 @@ Future investigations are required to establish a Dix-type inversion approach th
 
 Another possible extension of this work is to apply the proposed theory in the context of velocity anomaly removal similar to \cite{blias2009}, \cite{takanashitsvankin11}, and \cite{takanashitsvankin12}. In light of our result on the need of a recursive relationship (equation~\ref{eq:recursion}) to collect lateral heterogeneity effects from both curved interfaces and variable medium parameters, it remains to be investigated how the contribution from any individual layer with embedded velocity anomaly can be removed in an accurate and efficient manner.
 
-The proposed method takes into account the effects from lateral heterogeneity by modifying the second-order traveltime derivative related to NMO velocity (reflection) or time-migration velocity (diffraction). Therefore, the limit on the validity of the hyperbolic traveltime assumption in both cases is still enforced. We further discuss the possibility of extending our framework to higher-order traveltime derivatives in Appendix B, where the conventional paraxial ray theory is no longer applicable. A 3D extension of the proposed formulas can be also done with the derivatives turning into matrices.
+The proposed method takes into account the effects from lateral heterogeneity by modifying the second-order traveltime derivative related to NMO velocity (reflection) or time-migration velocity (diffraction). Therefore, the limit on the validity of the hyperbolic traveltime assumption in both cases is still enforced. We further discuss the possibility of extending our framework to higher-order traveltime derivatives in Appendix D, where the conventional paraxial ray theory is no longer applicable. A possible 3D extension of the proposed framework is investigated in Appendix E, where we observe that an additional solve of a linear system of equations at each interface surface is needed to track the higher number of pertaining parameters in 3D. However, a direct solve of this system is generally not possible due to a smaller number of equations than unknowns. This problem was conveniently circumvented in the 2D case due to the smaller number of associated parameter (only one) and the use of a recursive relationship, which is no longer straightforward to formulate in the 3D case. Consequently, further investigations are required to extend the proposed framework to work with 3D datasets.
 
 Our method takes into account the first-order effects from lateral heterogeneity in largely flat subsurface, which ensures that the normal-incidence ray and the image ray stays close to the reference vertical direction. Consequently, our approach does not substitute the dip-moveout process (DMO) for handling effects from dipping reflectors, which becomes prominent as the dip increases. The Gardner continuation \cite[]{gardner} serves as an alternative means to rid the moveout velocity on its dip dependency by transforming the prestack data into a special domain.
 
 In our framework, we choose to consider the traveltime expression in the group domain, where it depends on the medium parameters and the spatial location in Cartesian coordinates. This choice allows for practical convenience when considering information at the zero offset and is appropriate for predominantly horizontally layered media with weak heterogeneity effects such as in land datasets associated with unconventional reservoirs. An alternative formulation can also be constructed in the phase domain, which can be advantageous when considering more complex media with arbitrarily dipping interfaces \cite[]{nmosurface,stackingtomo}.
 
-Finally, we note that the results from this study, coupled with accurate moveout functional forms \cite[]{fomelstovas,zonegmapaper}, may serve as the basis for possible future improvements of practical moveout inversion techniques that take into account the lateral heterogeneity effects. Subsequent applications of time-to-depth conversion methods that also honor lateral heterogeneity can potentially lead to an improved time-domain imaging workflow and a more accurate subsurface velocity model efficiently obtained from time processing. \cite[]{cam2007,siweit2d,valente,zonet2dweak}. The latter is especially favorable as it may represent a good starting model for more sophisticated tomographic or full-waveform inversion techniques and lead to better convergence.
+Finally, we note that the results from this study, coupled with accurate moveout functional forms \cite[]{fomelstovas,zonegmapaper}, may serve as the basis for possible future improvements of practical moveout inversion techniques that take into account the lateral heterogeneity effects. Subsequent applications of time-to-depth conversion methods that also honor lateral heterogeneity can potentially lead to an improved time-domain imaging workflow and a more accurate subsurface velocity model efficiently obtained from time processing \cite[]{cam,siweit2d,valente,zonet2dweak}. The latter is especially favorable as it may represent a good starting model for more sophisticated tomographic or full-waveform inversion techniques and lead to better convergence.
 
 \section{conclusions}
 
-We have proposed a general framework for evaluating the one-way traveltime derivatives in layered anisotropic media in the presence of weak lateral heterogeneity from curved reflectors and lateral velocity variations. Relying on the Fermat’s principle, we show that in 2-D media, the effects from lateral heterogeneity in each sublayer gets accumulated according to a recursive relationship. We specify the expressions for the second-order traveltime derivatives related to NMO velocity and time-migration velocity suitable for 2-D datadets that honor these effects from lateral heterogeneity. We subsequently show that the new expressions can lead to improved moveout predictions and better focused diffraction responses. The results of this study fill in the missing gap in existing theory and serve as a basis for understanding and quantifying the first-order effects of lateral heterogeneity on reflection and diffraction traveltimes in multilayer anisotropic media. The fundamentals provided in this work is important for future design of accurate parameter estimation techniques such as Dix-type inversion that honor the effects from lateral heterogeneity.
+We have proposed a general framework for evaluating the one-way traveltime derivatives in layered anisotropic media in the presence of weak lateral heterogeneity from curved reflectors and lateral velocity variations. Relying on the Fermat's principle, we show that in 2D media, the effects from lateral heterogeneity in each sublayer gets accumulated according to a recursive relationship. We specify the expressions for the second-order traveltime derivatives related to NMO velocity and time-migration velocity suitable for 2D datadets that honor these effects from lateral heterogeneity. We subsequently show that the new expressions can lead to improved moveout predictions and better focused diffraction responses. The results of this study fill in the missing gap in existing theory and serve as a basis for understanding and quantifying the first-order effects of lateral heterogeneity on reflection and diffraction traveltimes in multi-layer anisotropic media. The fundamentals provided in this work is important for future design of accurate parameter estimation techniques such as Dix-type inversion that honor the effects from lateral heterogeneity. 
 
 \section{Acknowledgments}
 We are grateful to the associate editor, H. Chauris, and the reviewers, I. Ravve and E. Iversen for constructive comments that help improve the paper. We thank E. Blias and I. Vasconcelos for helpful discussions. We thank the sponsors of the Texas Consortium for Computational Seismology (TCCS) and the Rock Seismic Research Project (ROSE) for financial support. The first author was additionally supported by the Statoil Fellows Program at the University of Texas at Austin.
 
-\onecolumn
-\bibliographystyle{seg}
-\bibliography{review}
-
 % APPENDIX %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \clearpage
 %\appendix
-\append{Review of reflection and diffraction traveltime approximations}
+\section{Appendix A \\ Review of reflection and diffraction traveltime approximations}
 %\setcounter{figure}{0}
 %\renewcommand{\thefigure}{A-\arabic{figure}}
-The basis of our construction in this paper is the one-way traveltime in general layered media and its derivatives. In this appendix, we review an important concept on how this one-way traveltime can be related to two-way reflection and diffraction traveltimes, which signifies the importance of the presented results. For simplicity, we only show the expressions in the 2-D case.
+The basis of our construction in this paper is the one-way traveltime in general layered media and its derivatives. In this appendix, we review an important concept on how this one-way traveltime can be related to two-way reflection and diffraction traveltimes, which signifies the importance of the presented results. For simplicity, we only show the expressions in the 2D case.
 
 \subsection{Reflection traveltime}
-Reflection traveltime (moveout) approximations are commonly expressed as a Taylor series of two-way traveltime squared around zero offset with only even powers \cite[]{taner}. Assuming pure-mode reflections with source-receiver reciprocity and symmetric raypaths between the incident and the reflected waves around zero offset in 1-D media, we can construct a two-way reflection traveltime approximation by adding two one-way traveltime approximations (from $-h$ and $+h$) as follows \cite[]{thomsenbook,tsvankinbook,zoneinterval}:
+Reflection traveltimes (moveout) are commonly expressed as a Taylor series of two-way traveltime squared around zero offset with only even powers \cite[]{taner}. Assuming pure-mode reflections with source-receiver reciprocity and symmetric raypaths between the incident and the reflected waves around zero offset in 1D media, we can construct a two-way reflection traveltime approximation by adding two one-way traveltime approximations (from $-h$ and $+h$) as follows \cite[]{thomsenbook,tsvankinbook,zoneinterval}:
 \begin{equation}
 \label{eq:refltimefirst}
 2 t (h) = 2 T +  h^2 \left.\left(\frac{\partial^2 t}{\partial h^2 }\right)\right\rvert_{h=0} + \frac{h^4}{12} \left.\left(\frac{\partial^4 t}{\partial h^4 }\right)\right\rvert_{h=0} + \cdots  ~.
 \end{equation}
-We follow the same notation as in the main text and use $T$ to denote one-way zero-offset traveltime. Equation~\ref{eq:refltimefirst} can be converted to a more commonly known series in two-way traveltime squared in terms of full offsets ($2h$) as follows:
+We follow the same notation as in the main text and use $T$ to denote one-way zero-offset traveltime. Equation~(\ref{eq:refltimefirst}) can be converted to a more commonly known series in two-way traveltime squared in terms of full offsets ($2h$) as follows:
 \begin{equation}
 \label{eq:refltime}
 4 t^2 ( 2h ) \approx 4 T^2 +  a_2 (2 h)^2 + a_4 (2 h)^4~,
@@ -420,14 +409,14 @@ We emphasize that two important assumptions are made in the derivation so far:
 	\item We only consider pure-mode reflections with source-receiver reciprocity.
 	\item The incident and reflected raypaths are symmetric around zero offset.
 \end{enumerate}
-Except for some special configurations, the first assumption is generally absent in consideration of converted waves and the series of reflection traveltime will also contain terms with odd powers \cite[]{tsvankin2011book,thomsenbook,korenravvetriclinic}. On the other hand, the second assumption ensures the absence of reflection dispersal, which in turn, suggests that zero offset corresponds to the vertical ray. When this assumption does not hold, the fourth-order reflection traveltime coefficient ($a_4$) becomes more complex than what is shown in equation \ref{eq:a4} \cite[]{pech2003,korenravvetriclinic}. \cite{nmoellipse} emphasized that reflection dispersal has no effect on NMO velocity related to equation ~\ref{eq:a2} \cite[]{hubralkrey}. It becomes important only when considering higher-order traveltime coefficients such as $a_4$ in equation~\ref{eq:a4}.
+Except for some special configurations, the first assumption is generally absent in consideration of converted waves and the series of reflection traveltime will also contain terms with odd powers \cite[]{tsvankin2011book,thomsenbook,korenravvetriclinic}. On the other hand, the second assumption ensures the absence of reflection dispersal, which in turn, suggests that zero offset corresponds to the vertical ray. When this assumption does not hold, the fourth-order reflection traveltime coefficient ($a_4$) becomes more complex than what is shown in equation (\ref{eq:a4}) \cite[]{pech2003,korenravvetriclinic}. \cite{nmoellipse} emphasized that reflection dispersal has no effect on NMO velocity related to equation ~(\ref{eq:a2}) \cite[]{hubralkrey}. It becomes important only when considering higher-order traveltime coefficients such as $a_4$ in equation~(\ref{eq:a4}).
 
-In this paper, we only utilize the relationship between the reflection traveltime coefficients ($a_2$) and the second-order derivative of the one-way traveltime of the fictional normal-incidence ray in equation~\ref{eq:a2}, which is not affected by reflection dispersal. Therefore, NMO velocity can be computed from
+In this paper, we only utilize the relationship between the reflection traveltime coefficients ($a_2$) and the second-order derivative of the one-way traveltime of the fictional normal-incidence ray in equation~(\ref{eq:a2}), which is not affected by reflection dispersal. Therefore, NMO velocity can be computed from
 \begin{equation}
 \label{eq:vnmoa}
 V^2_{nmo} = \frac{1}{a_2}~,
 \end{equation}
-as shown in equation~\ref{eq:vnmo}. However, we emphasize the importance of the aforementioned assumptions and advise careful consideration when extending our framework to study higher-order reflection traveltime coefficients such as $a_4$.
+as shown in equation~(\ref{eq:vnmo}). However, we emphasize the importance of the aforementioned assumptions and advise careful consideration when extending our framework to study higher-order reflection traveltime coefficients such as $a_4$.
 
 \subsection{Diffraction traveltime}
 
@@ -437,44 +426,46 @@ As a more fundamental alternative to study seismic responses, one can choose to 
 t_s + t_r = \sqrt{\hat{T}^2 + \left(\frac{m-h-x_0}{v}\right)^2} + \sqrt{\hat{T}^2 + \left(\frac{m+h-x_0}{v}\right)^2}~,
 \end{equation}
 where $m$ denotes midpoint, $h$ denotes half offset, $x_0$ denotes the horizontal coordinate of the point scatterer, and $\hat{T}$ is a one-way vertical traveltime from the point scatterer to the surface. The true location of the point scatterer $x_0$ will also be the same as the emerging location of the image rays \cite[]{hubralimageray}.
-%If the subsurface velocity only depends on depth (1-D) and the considered offset is sufficiently small, the time-migration velocity is equal to the effective NMO (RMS) velocity. 
+%If the subsurface velocity only depends on depth (1D) and the considered offset is sufficiently small, the time-migration velocity is equal to the effective NMO (RMS) velocity. 
 
-In the more general case of varying subsurface velocity, equation~\ref{eq:cheop} becomes an approximation for diffraction traveltime that is routinely used in prestack time migration \cite[]{yilmaz}. $\hat{T}$ then denotes the one-way traveltime of the image ray from the point scatter to the surface and the escape location $x_0$ of the image ray will generally be different from the true location of the point scatterer in the Cartesian coordinates. The velocity $v$ becomes time-migration velocity $V_m$, which will be selected for the best fit traveltime to equation~\ref{eq:cheop}.
+In the more general case of varying subsurface velocity, equation~(\ref{eq:cheop}) becomes an approximation for diffraction traveltime that is routinely used in prestack time migration \cite[]{yilmaz}. $\hat{T}$ then denotes the one-way traveltime of the image ray from the point scatter to the surface and the escape location $x_0$ of the image ray will generally be different from the true location of the point scatterer in the Cartesian coordinates. The velocity $v$ becomes time-migration velocity $V_m$, which will be selected for the best fit traveltime to equation~(\ref{eq:cheop}).
 
-To further understand equation~\ref{eq:cheop} in heterogeneous media, we follow the derivation by \cite{cam2007} and consider the general one-way traveltime approximation centered around the image ray from the point scatterer to any surface point $x$ given by,
+To further understand equation~(\ref{eq:cheop}) in heterogeneous media, we follow the derivation by \cite{cam2007} and consider the general one-way traveltime approximation centered around the image ray from the point scatterer to any surface point $x$ given by,
 \begin{equation}
 \label{eq:dtime1}
 t = \hat{T} + \frac{\hat{x}^2}{2} \left.\frac{\partial^2 t}{\partial \hat{x}^2}\right\rvert_{\hat{x}=0} + \frac{\hat{x}^3}{6} \left.\frac{\partial^3 t}{\partial \hat{x}^3}\right\rvert_{\hat{x}=0} + O(\hat{x}^4)~,
 \end{equation}
-where $\hat{x} = x-x_0$ denotes the distance between the escape location $x_0$ and any surrounding point $x$ on the surface. Note that $\hat{x}$ functions similarly to $h$ in equation~\ref{eq:dnt} but has a different meaning than the conventional half offset when considering reflection traveltime. The first-order term in equation~\ref{eq:dtime1} is always equal to zero due to the image rays always having zero phase slowness tangent to the surface, or equivalently to $\partial t/\partial \hat{x} = 0 $ at $\hat{x}=0$. We emphasize the notable presence of possible third-order term ($\hat{x}^3$). This term can be neglected when $\hat{x}$ is sufficiently small or when the medium under consideration provides additional symmetry to the function of traveltime such as in homogeneous or horizontally layered VTI media, where traveltime varies as an even function around $\hat{x}=0$. Converting equation~\ref{eq:dtime1} to a series in traveltime squared gives
+where $\hat{x} = x-x_0$ denotes the distance between the escape location $x_0$ and any surrounding point $x$ on the surface. Note that $\hat{x}$ functions similarly to $h$ in equation~(\ref{eq:dnt}) but has a different meaning than the conventional half offset when considering reflection traveltime. The first-order term in equation~(\ref{eq:dtime1}) is always equal to zero due to the image rays always having zero phase slowness tangent to the surface, or equivalently to $\partial t/\partial \hat{x} = 0 $ at $\hat{x}=0$. We emphasize the notable presence of possible third-order term ($\hat{x}^3$). This term can be neglected when $\hat{x}$ is sufficiently small or when the medium under consideration provides additional symmetry to the function of traveltime such as in homogeneous or horizontally layered VTI media, where traveltime varies as an even function around $\hat{x}=0$. Converting equation~(\ref{eq:dtime1}) to a series in traveltime squared gives
 \begin{equation}
 \label{eq:dtime2}
 t^2 = \hat{T}^2 + \hat{x}^2 \hat{T}\left.\frac{\partial^2 t}{\partial \hat{x}^2}\right\rvert_{\hat{x}=0} + O(\hat{x}^3)~.
 \end{equation}
-Using equation~\ref{eq:dtime2}, we can compute the total traveltime from a source at $m+h$ to point scatterer and to a receiver at $m-h$ as follows,
+Using equation~(\ref{eq:dtime2}), we can compute the total traveltime from a source at $m+h$ to point scatterer and to a receiver at $m-h$ as follows,
 \begin{equation}
 \label{eq:dtime3}
 t_s + t_r = \sqrt{\hat{T}^2 + (m-h-x_0)^2 \hat{T}\left.\frac{\partial^2 t}{\partial \hat{x}^2}\right\rvert_{\hat{x}=0}} + \sqrt{\hat{T}^2 + (m+h-x_0)^2 \hat{T}\left.\frac{\partial^2 t}{\partial \hat{x}^2}\right\rvert_{\hat{x}=0}} + O(\hat{x}^3)~.
 \end{equation}
-Equation~\ref{eq:dtime3} suggests that equation~\ref{eq:cheop} simply represents a sum of two Taylor expansions of the one-way traveltime from the point scatterer to the source and the receiver. Therefore, the migration velocity $V_m$ can be related to the one-way traveltime derivatives as shown in equation~\ref{eq:vm}. Moreover, our proposed framework to study the effects of weak lateral heterogeneity on one-way traveltime is applicable to $v_m$ provided that the image ray is assumed to be sufficiently close to the vertical direction, which is exactly true in the case of 1-D layered anisotropic media with horizontal symmetry planes.
+Equation~(\ref{eq:dtime3}) suggests that equation~(\ref{eq:cheop}) simply represents a sum of two Taylor expansions of the one-way traveltime from the point scatterer to the source and the receiver. Therefore, the migration velocity $V_m$ can be related to the one-way traveltime derivatives as shown in equation~(\ref{eq:vm}). Moreover, our proposed framework to study the effects of weak lateral heterogeneity on one-way traveltime is applicable to $v_m$ provided that the image ray is assumed to be sufficiently close to the vertical direction, which is exactly true in the case of 1D layered anisotropic media with horizontal symmetry planes.
 
 
 
 
-\append{Derivation of the recursive formula}
-In this appendix, we provide a detailed derivation of the studied recursive formula (equation~\ref{eq:recursion}) and discuss a possible extension to evaluate higher-order traveltime derivatives. We start from the case of two-layered media previously investigated by \cite{blias1981}, \cite{bliasgrit1984},  \cite{gritsenko}, and \cite{goldin} and proceed to the case of three-layered media to show how the recursion can be established for multi-layered media.
+\section{Appendix B \\ Derivation of the recursive formula}
+In this appendix, we provide a detailed derivation of the studied recursive formula (equation~(\ref{eq:recursion})) and discuss a possible extension to evaluate higher-order traveltime derivatives. We start from the case of two-layer media previously investigated by \cite{blias1981}, \cite{bliasgrit1984},  \cite{gritsenko}, and \cite{goldin} and proceed to the case of three-layered media to show how the recursion can be established for multi-layer media.
+
 
 \subsection{Two-layer case}
-
-\inputdir{.}
-\plot{2layer}{width=0.9\columnwidth}{The ray configurations two- and three-layered media as the basis for relating the second-order traveltime derivatives at different interfaces.}
-
-Consider the two-layered setup shown in the left plot of Figure~\ref{fig:2layer}. In our notation, the total one-way traveltime is equal to
+Consider the two-layer setup shown in the left plot of Figure~\ref{fig:2layer}. In our notation, the total one-way traveltime is equal to
 \begin{equation}
-\label{eq:time2l}
+\label{eq:time2la}
 t = t_0(\mathbf{x_0},\mathbf{x_1}(h)) + t_1(\mathbf{x_1}(h),\mathbf{x_2}(h)) \quad\text{where}\quad h = x_2-x_0~.
 \end{equation}
-We emphasize the simple relationship between $x_2$ and $h$ and differentiating equation~\ref{eq:time2l} with respect to $h$ to obtain  
+By definition of $\mathbf{x}_k= \big(x_k,f_k(x_k)\big)$, we may write equation~(\ref{eq:time2la}) as
+\begin{equation}
+\label{eq:time2l}
+t = t_0(x_0,x_1(h)) + t_1(x_1(h),x_2(h)) \quad\text{where}\quad h = x_2-x_0~.
+\end{equation}
+We emphasize the simple relationship between $x_2$ and $h$ and differentiating equation~(\ref{eq:time2l}) with respect to $h$ to obtain  
 \begin{equation}
 \frac{\partial t}{\partial h} = \frac{\partial t_1}{\partial h} +  \frac{\partial t}{\partial x_1}  \frac{d x_1}{d h}  ~,
 \end{equation}
@@ -483,12 +474,12 @@ where the second term on the right-hand side disappear due to Fermat's principle
 \label{eq:1d2l}
 \frac{\partial t}{\partial h} = \frac{\partial t_1}{\partial h}  ~.
 \end{equation}
-Further differentiating equation~\ref{eq:1d2l} with respect to $h$ leads to
+Further differentiating equation~(\ref{eq:1d2l}) with respect to $h$ leads to
 \begin{equation}
 \label{eq:2d2l}
 \frac{\partial^2 t}{\partial h^2} = \frac{\partial^2 t_1}{\partial h^2} + \frac{\partial^2 t_1}{\partial x_1 \partial h}\left( \frac{d x_1}{d h}\right) ~.
 \end{equation}
-To evaluate the derivative in equation~\ref{eq:2d2l}, we need $d x_1/d h$, which can be found from differentiating the Fermat's condition ($\partial t/ \partial x_1 = 0$) with respect to $h$. This leads to
+To evaluate the derivative in equation~(\ref{eq:2d2l}), we need $d x_1/d h$, which can be found from differentiating the Fermat's condition ($\partial t/ \partial x_1 = 0$) with respect to $h$. This leads to
 \begin{equation}
  \frac{\partial^2 t_1 }{ \partial x_1 \partial h} + \frac{\partial^2 t }{ \partial x_1^2} \left( \frac{d x_1}{d h}\right) = 0~,
 \end{equation} 
@@ -497,12 +488,14 @@ and therefore,
 \label{eq:recur2l}
  \frac{d x_1}{d h} = - \left. \left(\frac{\partial^2 t_1 }{ \partial x_1 \partial h}\right) \middle/ \left(\frac{\partial^2 t }{ \partial x_1^2} \right) \right. =  - \left. \left(\frac{\partial^2 t_1 }{ \partial x_1 \partial h}\right) \middle/ \left(\frac{\partial^2 (t_0+t_1) }{ \partial x_1^2} \right) \right.  ~.
 \end{equation} 
-Substituting equation~\ref{eq:recur2l} into equation~\ref{eq:2d2l} leads to the final expression for the two-layered case studied by \cite{blias1981}, \cite{bliasgrit1984}, \cite{gritsenko}, and \cite{goldin}:
+Substituting equation~(\ref{eq:recur2l}) into equation~(\ref{eq:2d2l}) leads to the final expression for the two-layer case studied by \cite{blias1981}, \cite{bliasgrit1984}, \cite{gritsenko}, and \cite{goldin}:
 \begin{equation}
 \label{eq:2d2lsub}
 \frac{\partial^2 t}{\partial h^2} = \frac{\partial^2 t_1}{\partial h^2} - \left. \left(\frac{\partial^2 t_1 }{ \partial x_1 \partial h}\right)^2 \middle/ \left(\frac{\partial^2 (t_0+t_1) }{ \partial x_1^2} \right) \right. ~,
 \end{equation}
-which relates the second-order total traveltime derivative at the surface ($\partial^2 t/\partial h^2$) to that of the interface below ($\partial^2 t_1/\partial h^2$). All pertaining derivatives in equation~\ref{eq:2d2lsub} can be found from equation~\ref{eq:dthet} in the main text that include the first-order effects from lateral heterogeneity. 
+which relates the second-order total traveltime derivative at the surface ($\partial^2 t/\partial h^2$) to that of the interface below ($\partial^2 t_1/\partial h^2$). All pertaining derivatives in equation~(\ref{eq:2d2lsub}) can be found from equation~(\ref{eq:dthet}) in the main text that include the first-order effects from lateral heterogeneity. 
+\inputdir{.}
+\plot{2layer}{width=0.9\columnwidth}{The ray configurations two- and three-layered media as the basis for relating the second-order traveltime derivatives at different interfaces.}
 
 \subsection{Three-layer case}
 
@@ -511,7 +504,7 @@ Let us now turn to the right plot of Figure~\ref{fig:2layer}, which depicts the 
 \label{eq:time3l}
 t = t_0(\mathbf{x_0},\mathbf{x_1}(h)) + t_1(\mathbf{x_1}(h),\mathbf{x_2}(h)) + t_2(\mathbf{x_2}(h),\mathbf{x_3}(h)) \quad\text{where}\quad h = x_3-x_0~.
 \end{equation}
-We can proceed along the same line of argument as in the two-layered case and differentiating the total time with respect to $h$, which leads to
+We can proceed along the same line of argument as in the two-layer case and differentiating the total time with respect to $h$, which leads to
 \begin{equation}
 \frac{\partial t}{\partial h} = \frac{\partial t_2}{\partial h} +  \sum^2_{k=1} \frac{\partial t}{\partial x_k}  \frac{\partial x_k}{\partial h}~.
 \end{equation}
@@ -524,7 +517,7 @@ We further differentiate the expression with respect to $h$ and arrive at
 \label{eq:2d3l}
 \frac{\partial^2 t}{\partial h^2} = \frac{\partial^2 t_2}{\partial h^2} + \frac{\partial^2 t_2}{\partial x_2 \partial h}\left( \frac{d x_2}{d h}\right) ~.
 \end{equation}
-To find $d x_2/ d h$, we differentiate the Fermat's conditions ($\partial t / \partial x_k = 0$ for $k \in \{1,2\}$) in a similar manner as in the two-layered case. 
+To find $d x_2/ d h$, we differentiate the Fermat's conditions ($\partial t / \partial x_k = 0$ for $k \in \{1,2\}$) in a similar manner as in the two-layer case. 
 \begin{enumerate}
 \item  At the first interface ($k=1$), the condition $\partial t / \partial x_1 =  \partial ( t_0+t_1) / \partial x_1  =  0$ leads to 
 \begin{equation}
@@ -537,24 +530,24 @@ To find $d x_2/ d h$, we differentiate the Fermat's conditions ($\partial t / \p
 \frac{\partial^2 t_1}{\partial x_1 \partial x_2} \left( \frac{d x_1}{d h}\right) + \frac{\partial^2 (t_1 + t_2)}{\partial x_2^2} \left( \frac{d x_2}{d h}\right) + \frac{\partial^2 t_2}{\partial x_2 \partial h} = 0
 \end{equation}
 \end{enumerate}
-At this stage, we can see that equations~\ref{eq:cond1} and \ref{eq:cond2} contain two unknown variables $dx_1/dh$ and $dx_2/dh$ to be solved for. We propose to look at this problem in a specific way that will facilitate an extension to the general multi-layered case. We first rearrange equation~\ref{eq:cond1} into the following form
+At this stage, we can see that equations~(\ref{eq:cond1}) and (\ref{eq:cond2}) contain two unknown variables $dx_1/dh$ and $dx_2/dh$ to be solved for. We propose to look at this problem in a specific way that will facilitate an extension to the general multi-layer case. We first rearrange equation~(\ref{eq:cond1}) into the following form
  \begin{equation}
  \label{eq:r2l}
  r = \left. \left( \frac{d x_1}{d h}\right) \middle/ \left( \frac{d x_2}{d h}\right)\right. = \left. -\left( \frac{\partial^2 t_1}{\partial x_1 \partial x_2} \right) \middle/ \left( \frac{\partial^2 (t_0 + t_1)}{\partial x_1^2} \right)\right. ~,
  \end{equation}
-which is reminiscent of equation~\ref{eq:recur2l} for the two-layered case when $x_2 = h + \text{const}$.  Substituting equation~\ref{eq:r2l} into equation~\ref{eq:cond2}, we arrive at
+which is reminiscent of equation~(\ref{eq:recur2l}) for the two-layer case when $x_2 = h + \text{const}$.  Substituting equation~(\ref{eq:r2l}) into equation~(\ref{eq:cond2}), we arrive at
  \begin{equation}
   \frac{dx_2}{dh} =  \left. -\left( \frac{\partial^2 t_2}{\partial x_2 \partial h} \right) \middle/ \left( r \frac{\partial^2 t_1}{\partial x_1 \partial x_2}  + \frac{\partial^2 (t_1 + t_2)}{\partial x_2^2} \right)\right.  ~,
  \end{equation}
- which can be substituted into equation~\ref{eq:2d3l} to evaluate the desired second-order total traveltime derivative.
+ which can be substituted into equation~(\ref{eq:2d3l}) to evaluate the desired second-order total traveltime derivative.
  
 
-\subsection{Muiltilayer case}
-Looking closer at equations~\ref{eq:cond1} and \ref{eq:cond2}, we can observe that for each condition at the $k$-th interface, there are generally three terms:
+\subsection{Multi-layer case}
+Looking closer at equations~(\ref{eq:cond1}) and (\ref{eq:cond2}), we can observe that for each condition at the $k$-th interface, there are generally three terms:
 \begin{equation}
 \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial x_k} \left( \frac{d x_{k-1}}{d h}\right) + \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k^2} \left( \frac{d x_k}{d h}\right) + \frac{\partial^2 t_k}{\partial x_k \partial x_{k+1}}\left( \frac{d x_{k+1}}{d h}\right) = 0~,
 \end{equation}
-where $k = 1, \dots, n$ for a medium with $n+1$ layers. The source at $x_0$ is fixed and therefore, $dx_0/dh = 0$. Moreover, the receiver at $x_{n+1} = h - x_0$, which leads to $dx_{n+1} /dh = 1$. Therefore, we can derive the following set of equations in the general case of multi-layered media:
+where $k = 1, \dots, n$ for a medium with $n+1$ layers. The source at $x_0$ is fixed and therefore, $dx_0/dh = 0$. Moreover, the receiver is located at $x_{n+1} = h + x_0$, which leads to $dx_{n+1} /dh = 1$. Therefore, we can derive the following set of equations in the general case of multi-layer media:
 
 \begin{align}
  \frac{\partial^2 (t_0 + t_1)}{\partial x_1^2} \left( \frac{d x_1}{d h}\right) + \frac{\partial^2 t_1}{\partial x_1 \partial x_2} \left( \frac{d x_2}{d h}\right) & = 0~, \\
@@ -571,17 +564,17 @@ which leads to the recursive formula
 \label{eq:rnl}
  r_k = \left. \left( \frac{d x_k}{d h}\right) \middle/ \left( \frac{d x_{k+1}}{d h}\right)\right. = \left. -\left( \frac{\partial^2 t_k}{\partial x_k \partial x_{k+1}} \right) \middle/ \left(  r_{k-1} \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial x_k}  + \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k^2} \right)\right. ~,
 \end{equation}
-where $r_0 = 0$ due to $dx_0/dh = 0$. This newly developed equation is an exact extension of the two-layered case result (equation~\ref{eq:recur2l}) to the multi-layered case and is similar to equation~\ref{eq:recursion} in the main text.
+where $r_0 = 0$ due to $dx_0/dh = 0$. This newly developed equation is an exact extension of the two-layer case result (equation~(\ref{eq:recur2l})) to the multi-layer case and is similar to equation~(\ref{eq:recursion}) in the main text.
 
 
-\append{A summation scheme to accumulate heterogeneity effects}
+\section{Appendix C \\ A summation scheme to accumulate heterogeneity effects}
 
-As opposed to the exact recursion proposed in this study, a simpler summation scheme was previously used to accumulate the effects from heterogeneity. A review of this concept can be found in \cite{blias2006} and we briefly summarize the essentials here. One way to interpret this summation process is to examine one interface at a time and assume that apart from the considered interface, other intermediate layers between the source at larger depth and the receiver at the surface are laterally homogeneous (1-D). Under this assumption, one can evaluate the contribution from lateral heterogeneity for this particular interface and its two adjacent layers using the result from the two-layered case (equation~\ref{eq:2d2lsub}). To further describe this process, we first assume that all sublayers are homogeneous isotropic similarly to what was done by Blias and consider only one non-flat interface at $i$-th. Therefore, we have
+As opposed to the exact recursion proposed in this study, a simpler summation scheme was previously used to accumulate the effects from heterogeneity. A review of this concept can be found in \cite{blias2006} and we briefly summarize the essentials here. One way to interpret this summation process is to examine one interface at a time and assume that apart from the considered interface, other intermediate layers between the source at larger depth and the receiver at the surface are laterally homogeneous (1D). Under this assumption, one can evaluate the contribution from lateral heterogeneity for this particular interface and its two adjacent layers using the result from the two-layer case (equation~(\ref{eq:2d2lsub})). To further describe this process, we first assume that all sublayers are homogeneous isotropic similarly to what was done by Blias and consider only one non-flat interface at $i$-th. Therefore, we have
 \begin{equation}
 \label{eq:bliassimp}
 \frac{\partial^2 t}{\partial h^2} = \frac{\partial^2 \tau_i}{\partial h^2} - \left. \left(\frac{\partial^2 \tau_i }{ \partial x_i \partial h}\right)^2 \middle/ \left(\frac{\partial^2 (\tau_{i-1}+\tau_i) }{ \partial x_i^2} \right) \right. ~,
 \end{equation}
-where $\tau_0 = \sum^{i-1}_{k=0} t_k$ and $\tau_1 = \sum^n_{k=i} t_k$ denote the effective time below and above the non-flat $i$-th interface. To evaluate pertaining derivatives, we use equation~\ref{eq:dthet} for general media in the main text and focus only on the effects from curved interfaces at the moment by setting $W' = W'' = 0$ to exclude the effects from lateral velocity variations. Subsequently, we can derive the following expressions:
+where $\tau_0 = \sum^{i-1}_{k=0} t_k$ and $\tau_1 = \sum^n_{k=i} t_k$ denote the effective time below and above the non-flat $i$-th interface. To evaluate pertaining derivatives, we use equation~(\ref{eq:dthet}) for general media in the main text and focus only on the effects from curved interfaces at the moment by setting $W' = W'' = 0$ to exclude the effects from lateral velocity variations. Subsequently, we can derive the following expressions:
 \begin{align}
 \label{eq:hetiso}
 \left. \frac{\partial^2 \tau_i }{\partial h^2} \right\rvert_{h=0} & = \frac{1}{\sum^n_{k=i} D_k/W_k} = \frac{1}{A}~,\\
@@ -592,38 +585,41 @@ where $\tau_0 = \sum^{i-1}_{k=0} t_k$ and $\tau_1 = \sum^n_{k=i} t_k$ denote the
 \nonumber
 \left. \frac{\partial^2 \tau_i }{ \partial x_i^2} \right\rvert_{h=0} & =  \frac{1}{\sum^n_{k=i} D_k/W_k}+ F''_iW_i = \frac{1}{A} + F''_iW_i~,
 \end{align}
-where $W_k$ is the slowness for each isotropic sublayer $k$ and $D_k$ is its thickness. We also introduce dummy variables $A$ and $B$ to facilitate subsequent derivation.  Substituting equation~\ref{eq:hetiso} into equation~\ref{eq:bliassimp} leads to
+where $W_k$ is the slowness for each isotropic sublayer $k$ and $D_k$ is its thickness. We also introduce dummy variables $A$ and $B$ to facilitate subsequent derivation.  Substituting equation~(\ref{eq:hetiso}) into equation~(\ref{eq:bliassimp}) leads to
 \begin{equation}
 \label{eq:bliasonecurve}
 \left. \frac{\partial^2 t }{\partial h^2} \right\rvert_{h=0} = \left( \frac{1}{A +B} \right) \left( \frac{1+  F''_i (W_i - W_{i-1})B }{1+  F''_i (W_i - W_{i-1})AB /(A+B)} \right)
 \end{equation}
-where $ A+B = \sum^n_{k=0} D_k/W_k = T V^2_{rms}$ with $T$ being the total one-way zero-offset traveltime in the 1-D medium and $V_{rms}$ being the corresponding root-mean-square velocity. Therefore, the first term on the right-hand side of equation~\ref{eq:bliasonecurve} represents the usual second-order one-way traveltime derivative at zero offset in the 1-D medium, whereas the second term is the contribution from lateral heterogeneity. When $F''_i =0$ for flat $i$-th interface, this second term becomes unity.
+where $ A+B = \sum^n_{k=0} D_k/W_k = T V^2_{rms}$ with $T$ being the total one-way zero-offset traveltime in the 1D medium and $V_{rms}$ being the corresponding root-mean-square velocity. Therefore, the first term on the right-hand side of equation~(\ref{eq:bliasonecurve}) represents the usual second-order one-way traveltime derivative at zero offset in the 1D medium, whereas the second term is the contribution from lateral heterogeneity. When $F''_i =0$ for flat $i$-th interface, this second term becomes unity.
 
-To further simplify equation~\ref{eq:bliasonecurve}, it can be linearized with respect to $F''$, which results in
+To further simplify equation~(\ref{eq:bliasonecurve}), it can be linearized with respect to $F''$, which results in
 \begin{equation}
 \label{eq:bliasonecurvelin}
 \left. \frac{\partial^2 t }{\partial h^2} \right\rvert_{h=0} \approx \left( \frac{1}{A +B} \right) \left( 1+  \frac{F''_i (W_i - W_{i-1})B^2}{A+B} \right)~.
 \end{equation}
-Based on the result shown in equation~\ref{eq:bliasonecurvelin}, the total contribution from lateral heterogeneity due to various non-flat interfaces can be expressed as a summation  on the term with $F''$ rather than being computed through a recursive evaluation as proposed in this study. Equation~\ref{eq:bliasonecurvelin} is similar to equation 5 in \cite{blias2009stacking}. For the effects from lateral velocity change ($W''$), a similar derivation procedure can be adopted. Finally, we emphasize that due to the steps taken in the derivation of equation~\ref{eq:bliasonecurvelin}, the terms involving $F'W'$ apparent in the general expressions in equation~\ref{eq:dthet} are missing. These terms are also absent from the final result shown in equation 1 of \cite{blias2009stacking}.
+Based on the result shown in equation~(\ref{eq:bliasonecurvelin}), the total contribution from lateral heterogeneity due to various non-flat interfaces can be expressed as a summation  on the term with $F''$ rather than being computed through a recursive evaluation as proposed in this study. Equation~(\ref{eq:bliasonecurvelin}) is similar to equation 5 in \cite{blias2009stacking}. For the effects from lateral velocity change ($W''$), a similar derivation procedure can be adopted. Finally, we emphasize that due to the steps taken in the derivation of equation~(\ref{eq:bliasonecurvelin}), the terms involving $F'W'$ apparent in the general expressions in equation~(\ref{eq:dthet}) are missing. These terms are also absent from the final result shown in equation 1 of \cite{blias2009stacking}.
 
 
-\append{Possible extension to higher-order derivatives}
-In this section, we discuss a possibility of extending our framework to evaluate higher-order one-way traveltime derivatives up to the fourth order. As reviewed in Appendix A, the fourth-order term is particularly important because it can be related to the quartic moveout coefficients for an estimation of anisotropy from reflection traveltime. Let us consider the two-layered model shown in the left plot of Figure~\ref{fig:2layer} and differentiate the total traveltime (equaiton~\ref{eq:time2l}) with respect to $h$ up to the fourth order, which gives
+
+\section{Appendix D \\ Possible extension to higher-order derivatives}
+In this section, we discuss a possibility of extending our framework to evaluate higher-order one-way traveltime derivatives up to the fourth order. As reviewed in Appendix A, the fourth-order term is particularly important because it can be related to the quartic moveout coefficients for an estimation of anisotropy from reflection traveltime. Nonetheless, we emphasize the possible complications from reflection dispersal that may arise in the study of fourth-order traveltime derivatives for nonhyperbolic moveout \cite[e.g.,][]{pech2003}. 
+
+Under similar assumptions used by equation~(\ref{eq:a4}), let us consider the two-layer model shown in the left plot of Figure~\ref{fig:2layer} and differentiate the total traveltime (equaiton~(\ref{eq:time2l})) with respect to $h$ up to the fourth order, which gives
 \begin{align}
 \frac{\partial t}{\partial h} & = \frac{\partial t_1}{\partial h} +  \frac{\partial t}{\partial x_1}  \frac{d x_1}{d h}   = \frac{\partial t_1}{\partial h}~, \\
-\frac{\partial^2 t}{\partial x^2_2} & = \frac{\partial^2 t_1}{\partial h^2} + \textcolor{red}{\left( \frac{d x_1}{d h}\right)} \left(\frac{\partial^2 t_1}{\partial x_1 \partial h} \right) ~, \\
+\frac{\partial^2 t}{\partial x^2_2} & = \frac{\partial^2 t_1}{\partial h^2} + \boxed{\left( \frac{d x_1}{d h}\right)} \left(\frac{\partial^2 t_1}{\partial x_1 \partial h} \right) ~, \\
 \nonumber
-\frac{\partial^3 t}{\partial x^3_2} & = \frac{\partial^3 t_1}{\partial h^3} +  2\textcolor{red}{\left( \frac{d x_1}{d h}\right)} \left(\frac{\partial^3 t_1}{\partial x_1 \partial h^2} \right) +  \textcolor{red}{\left( \frac{d x_1}{d h}\right)^2} \left(\frac{ \partial^3 t_1}{\partial x_1^2 \partial h} \right)  \\
-& +  \textcolor{red}{\left( \frac{d ^2x_1}{d h^2}\right)} \left(\frac{ \partial^2 t_1}{\partial x_1 \partial h} \right) ~, \\
+\frac{\partial^3 t}{\partial x^3_2} & = \frac{\partial^3 t_1}{\partial h^3} +  2~\boxed{\left( \frac{d x_1}{d h}\right)} \left(\frac{\partial^3 t_1}{\partial x_1 \partial h^2} \right) +  \boxed{\left( \frac{d x_1}{d h}\right)^2} \left(\frac{ \partial^3 t_1}{\partial x_1^2 \partial h} \right)  \\
+& +  \boxed{\left( \frac{d ^2x_1}{d h^2}\right)} \left(\frac{ \partial^2 t_1}{\partial x_1 \partial h} \right) ~, \\
 \nonumber
-\frac{\partial^4 t}{\partial x^4_2} & = \frac{\partial^4 t_1}{\partial h^4} + 3 \textcolor{red}{\left( \frac{d x_1}{d h}\right)} \left(\frac{\partial^4 t_1}{\partial x_1 \partial h^3} \right) +  3\textcolor{red}{\left( \frac{d x_1}{d h}\right)^2} \left(\frac{ \partial^4 t_1}{\partial x_1^2 \partial h^2} \right) \\
+\frac{\partial^4 t}{\partial x^4_2} & = \frac{\partial^4 t_1}{\partial h^4} + 3 ~\boxed{\left( \frac{d x_1}{d h}\right)} \left(\frac{\partial^4 t_1}{\partial x_1 \partial h^3} \right) +  3~\boxed{\left( \frac{d x_1}{d h}\right)^2} \left(\frac{ \partial^4 t_1}{\partial x_1^2 \partial h^2} \right) \\
 \nonumber
-& +  3\textcolor{red}{\left( \frac{d x_1}{d h}\right)} \textcolor{red}{\left( \frac{d^2 x_1}{d h^2}\right)} \left(\frac{ \partial^3 t_1}{\partial x_1^2 \partial h} \right) +  3\textcolor{red}{\left( \frac{d^2 x_1}{d h^2}\right)} \left(\frac{ \partial^3 t_1}{\partial x_1 \partial h^2} \right) \\
-& + \textcolor{red}{\left( \frac{d x_1}{d h}\right)^3} \left(\frac{\partial^4 t_1}{\partial x_1^3 \partial h} \right) +  \textcolor{red}{\left( \frac{d^3 x_1}{d h^3}\right)} \left(\frac{\partial^2 t_1}{\partial x_1 \partial h} \right)~,
+& +  3~\boxed{\left( \frac{d x_1}{d h}\right)\left( \frac{d^2 x_1}{d h^2}\right)} \left(\frac{ \partial^3 t_1}{\partial x_1^2 \partial h} \right) +  3~\boxed{\left( \frac{d^2 x_1}{d h^2}\right)} \left(\frac{ \partial^3 t_1}{\partial x_1 \partial h^2} \right) \\
+& + \boxed{\left( \frac{d x_1}{d h}\right)^3} \left(\frac{\partial^4 t_1}{\partial x_1^3 \partial h} \right) +  \boxed{\left( \frac{d^3 x_1}{d h^3}\right)} \left(\frac{\partial^2 t_1}{\partial x_1 \partial h} \right)~,
 \end{align}
-where we highlight the terms that have to be computed recursively for multi-layered media. These include additional second- ($d^2 x_1 / d h^2$) and third-order derivatives ($d^3 x_1 / d h^3$). In principle, one may therefore, with proper care, further differentiating the Fermat's conditions at different interfaces to obtain the required recursive formulas along the same line as what we did in the derivation of equation~\ref{eq:rnl}. An approximation in the same manner as \cite{blias2006} suitable for the second-order traveltime derivative mentioned in Appendix C may lead to more simplified and manageable expressions. 
+where we highlight the terms that have to be computed recursively for multi-layer media. These include additional second- ($d^2 x_1 / d h^2$) and third-order derivatives ($d^3 x_1 / d h^3$). In principle, one may therefore, with proper care, further differentiating the Fermat's conditions at different interfaces to obtain the required recursive formulas along the same line as what we did in the derivation of equation~(\ref{eq:rnl}). An approximation in the same manner as \cite{blias2006} suitable for the second-order traveltime derivative mentioned in Appendix C may lead to more simplified and manageable expressions. 
 
-The one-way traveltime derivatives in each layer that include the effects of lateral heterogeneity can be straightforwardly computed using the current framework (equations~\ref{eq:owtimehor},~\ref{eq:fperturb}, and~\ref{eq:wperturb}) and we list them here for future references. We limit our consideration for the derivatives of $F$ and $W$ up to the second order in spatial derivatives. These following expressions must be used in conjunction with the exact or approximated recursive formulas that take into account higher-order terms to accumulate the effects of lateral heterogeneity from all layers on reflection or diffraction traveltime. Parameters related to the third-order traveltime derivatives include
+The one-way traveltime derivatives in each layer that include the effects of lateral heterogeneity can be straightforwardly computed using the current framework (equations~(\ref{eq:owtimehor}),~(\ref{eq:fperturb}), and~(\ref{eq:wperturb})) and we list them here for future references. We limit our consideration for the derivatives of $F$ and $W$ up to the second order in spatial derivatives. These following expressions must be used in conjunction with the exact or approximated recursive formulas that take into account higher-order terms to accumulate the effects of lateral heterogeneity from all layers on reflection or diffraction traveltime. Parameters related to the third-order traveltime derivatives include
 \begin{align}
 \left. \frac{\partial^3 t_k }{\partial x_k^3}\right\rvert_{h=0} & =  \left. \frac{\partial^3 T_k }{\partial x_k^3}\right\rvert_{h=0} + \text{H}_4~,\\
 \nonumber
@@ -679,3 +675,92 @@ where the heterogeneous terms are given by
 & + \frac{6 W_k F''_{k+1} }{(F_k-F_{k+1})^2} + \frac{12 W_k F'^2_{k+1} }{(F_k-F_{k+1})^3} ~.
 \end{align}
 
+
+
+\section{Appendix E \\ Possible extension to 3D}
+In this section, we discuss a possibility of extending the recursive formulation for 2D media in Appendix B to 3D media.
+
+\subsection{Two-layer case}
+Let us first consider the two-layer setup. In our notation, the total one-way traveltime in a 3D medium is equal to
+\begin{equation}
+\label{eq:time3d2l}
+t = t_0(x_0,y_0,x_1(h_x,h_y),y_1(h_x,h_y)) + t_1(x_1(h_x,h_y),y_1(h_x,h_y),x_2(h_x),y_2(h_y))~, 
+\end{equation}
+where $h_x = x_2-x_0$ and $h_y = y_2-y_0$. Equation (\ref{eq:time3d2l}) is the 3D version of equation~(\ref{eq:time2l}). We can proceed along the same line as before and differentiate equation (\ref{eq:time3d2l}) to obtain
+\begin{align}
+\label{eq:time3d2der2l}
+\frac{\partial^2 t}{\partial h_x^2} & =  \frac{\partial^2 t_1}{\partial h_x^2} +
+    \frac{\partial^2 t_1}{\partial h_x\partial x_1} \frac{\partial x_1}{\partial h_x} +
+    \frac{\partial^2 t_1}{\partial h_x\partial y_1} \frac{\partial y_1}{\partial h_x}~,\\ \nonumber
+\frac{\partial^2 t}{\partial h_y^2} & =  \frac{\partial^2 t_1}{\partial h_y^2} +
+    \frac{\partial^2 t_1}{\partial h_y\partial x_1} \frac{\partial x_1}{\partial h_y} +
+    \frac{\partial^2 t_1}{\partial h_y\partial y_1} \frac{\partial y_1}{\partial h_y}~,\\ \nonumber
+\frac{\partial^2 t}{\partial h_x \partial h_y} & =  \frac{\partial^2 t_1}{\partial h_x\partial h_y} +
+    \frac{\partial^2 t_1}{\partial h_x \partial x_1} \frac{\partial x_1}{\partial h_y} +
+    \frac{\partial^2 t_1}{\partial h_x \partial y_1} \frac{\partial y_1}{\partial h_y}~,\\ \nonumber
+    & =  \frac{\partial^2 t_1}{\partial h_x\partial h_y} +
+    \frac{\partial^2 t_1}{\partial h_y \partial x_1} \frac{\partial x_1}{\partial h_x} +
+    \frac{\partial^2 t_1}{\partial h_y \partial y_1} \frac{\partial y_1}{\partial h_x}~.
+\end{align}
+We can see from equation equation~(\ref{eq:time3d2der2l}) that for 3D media, we need to find four derivatives (as opposed to only one in 2D media) in order to relate the traveltime derivatives from one surface to another. To find these four derivatives including $\partial x_1/\partial h_x$, $\partial x_1/\partial h_y$, $\partial y_1/\partial h_x$, and $\partial y_1/\partial h_y$, we differentiate the Fermat's condition for 3D medium:
+\begin{equation}
+\label{eq:fermat3d2l}
+    \frac{\partial t}{\partial x_1} = \frac{\partial t}{\partial y_1} = 0~,
+\end{equation}
+with respect to $h_x$ and $h_y$, which leads to the following four conditions:
+\begin{align}
+\label{eq:fermat3d2der2l}
+\frac{\partial^2 t}{\partial x_1^2 } \frac{\partial x_1}{\partial h_x} + 
+    \frac{\partial^2 t}{\partial x_1 \partial y_1 } \frac{\partial y_1}{\partial h_x} + 
+    \frac{\partial^2 t_1}{\partial x_1 \partial h_x} & = 0~,\\ \nonumber
+\frac{\partial^2 t}{\partial x_1^2 } \frac{\partial x_1}{\partial h_y} + 
+    \frac{\partial^2 t}{\partial x_1 \partial y_1 } \frac{\partial y_1}{\partial h_y} + 
+    \frac{\partial^2 t_1}{\partial x_1 \partial h_y} & = 0~,\\ \nonumber
+\frac{\partial^2 t}{\partial x_1 \partial y_1 } \frac{\partial x_1}{\partial h_x}     + \frac{\partial^2 t}{\partial y_1^2 } \frac{\partial y_1}{\partial h_x} + 
+    \frac{\partial^2 t_1}{\partial y_1 \partial h_x} & = 0~,\\ \nonumber
+\frac{\partial^2 t}{\partial x_1 \partial y_1 } \frac{\partial x_1}{\partial h_y}     + \frac{\partial^2 t}{\partial y_1^2 } \frac{\partial y_1}{\partial h_y} + 
+    \frac{\partial^2 t_1}{\partial y_1 \partial h_y} & = 0~.
+\end{align}
+Equation~(\ref{eq:fermat3d2der2l}) represents a linear system of four equations to be solved for four unknown derivatives: $\partial x_1/\partial h_x$, $\partial x_1/\partial h_y$, $\partial y_1/\partial h_x$, and $\partial y_1/\partial h_y$. This is different from equation~(\ref{eq:recur2l}) for the case of 2D media, where we do not need to solve an additional linear system.
+
+\subsection{Multi-layer case}
+Turning to the 3D multi-layer case with $n+1$ layers, we have
+\begin{align}
+\label{eq:time3d2der}
+\frac{\partial^2 t}{\partial h_x^2} & =  \frac{\partial^2 t_n}{\partial h_x^2} +
+    \frac{\partial^2 t_n}{\partial h_x\partial x_n} \frac{\partial x_n}{\partial h_x} +
+    \frac{\partial^2 t_n}{\partial h_x\partial y_n} \frac{\partial y_n}{\partial h_x}~,\\ \nonumber
+\frac{\partial^2 t}{\partial h_y^2} & =  \frac{\partial^2 t_n}{\partial h_y^2} +
+    \frac{\partial^2 t_n}{\partial h_y\partial x_n} \frac{\partial x_n}{\partial h_y} +
+    \frac{\partial^2 t_n}{\partial h_y\partial y_n} \frac{\partial y_n}{\partial h_y}~,\\ \nonumber
+\frac{\partial^2 t}{\partial h_x \partial h_y} & =  \frac{\partial^2 t_n}{\partial h_x\partial h_y} +
+    \frac{\partial^2 t_n}{\partial h_x \partial x_n} \frac{\partial x_n}{\partial h_y} +
+    \frac{\partial^2 t_n}{\partial h_x \partial y_n} \frac{\partial y_n}{\partial h_y}~,\\ \nonumber
+    & =  \frac{\partial^2 t_n}{\partial h_x\partial h_y} +
+    \frac{\partial^2 t_n}{\partial h_y \partial x_n} \frac{\partial x_n}{\partial h_x} +
+    \frac{\partial^2 t_n}{\partial h_y \partial y_n} \frac{\partial y_n}{\partial h_x}~,
+\end{align}
+where we need to find $\partial x_n/\partial h_x$, $\partial x_n/\partial h_y$, $\partial y_n/\partial h_x$, and $\partial y_n/\partial h_y$ from differentiating the Fermat's principle similar to the previous 2D case. The general form of the linear system of equations at the $k$-th interface can be written as
+\begin{align}
+\label{eq:fermat3d2der}
+0 = & \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial x_k} \left( \frac{\partial x_{k-1}}{\partial h_x}\right) + \frac{\partial^2 t_{k-1}}{\partial y_{k-1} \partial x_k} \left( \frac{\partial y_{k-1}}{\partial h_x}\right) +\\ \nonumber
+    & \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k^2} \left( \frac{\partial x_k}{\partial h_x}\right) + \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k \partial y_k} \left( \frac{\partial y_k}{\partial h_x}\right) + \\ \nonumber
+    & \frac{\partial^2 t_k}{\partial x_k \partial x_{k+1}}\left( \frac{\partial x_{k+1}}{\partial h_x}\right)+ \frac{\partial^2 t_k}{\partial x_k \partial y_{k+1}}\left( \frac{\partial y_{k+1}}{\partial h_x}\right)~,\\ \nonumber
+0 = & \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial x_k} \left( \frac{\partial x_{k-1}}{\partial h_y}\right) + \frac{\partial^2 t_{k-1}}{\partial y_{k-1} \partial x_k} \left( \frac{\partial y_{k-1}}{\partial h_y}\right) +\\ \nonumber
+    & \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k^2} \left( \frac{\partial x_k}{\partial h_y}\right) + \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k \partial y_k} \left( \frac{\partial y_k}{\partial h_y}\right) + \\ \nonumber
+    & \frac{\partial^2 t_k}{\partial x_k \partial x_{k+1}}\left( \frac{\partial x_{k+1}}{\partial h_y}\right)+ \frac{\partial^2 t_k}{\partial x_k \partial y_{k+1}}\left( \frac{\partial y_{k+1}}{\partial h_y}\right)~,\\ \nonumber
+0 = & \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial y_k} \left( \frac{\partial x_{k-1}}{\partial h_x}\right) + \frac{\partial^2 t_{k-1}}{\partial y_{k-1} \partial y_k} \left( \frac{\partial y_{k-1}}{\partial h_x}\right) +\\ \nonumber
+    & \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k \partial y_k} \left( \frac{\partial x_k}{\partial h_x}\right) + \frac{\partial^2 (t_{k-1} + t_k)}{\partial y_k^2} \left( \frac{\partial y_k}{\partial h_x}\right) + \\ \nonumber
+    & \frac{\partial^2 t_k}{\partial y_k \partial x_{k+1}}\left( \frac{\partial x_{k+1}}{\partial h_x}\right)+ \frac{\partial^2 t_k}{\partial y_k \partial y_{k+1}}\left( \frac{\partial y_{k+1}}{\partial h_x}\right)~,\\ \nonumber
+0 = & \frac{\partial^2 t_{k-1}}{\partial x_{k-1} \partial y_k} \left( \frac{\partial x_{k-1}}{\partial h_y}\right) + \frac{\partial^2 t_{k-1}}{\partial y_{k-1} \partial y_k} \left( \frac{\partial y_{k-1}}{\partial h_y}\right) +\\ \nonumber
+    & \frac{\partial^2 (t_{k-1} + t_k)}{\partial x_k \partial y_k} \left( \frac{\partial x_k}{\partial h_y}\right) + \frac{\partial^2 (t_{k-1} + t_k)}{\partial y_k^2} \left( \frac{\partial y_k}{\partial h_y}\right) + \\ \nonumber
+    & \frac{\partial^2 t_k}{\partial y_k \partial x_{k+1}}\left( \frac{\partial x_{k+1}}{\partial h_y}\right)+ \frac{\partial^2 t_k}{\partial y_k \partial y_{k+1}}\left( \frac{\partial y_{k+1}}{\partial h_y}\right)~,\\ \nonumber
+\end{align}
+where $k = 1, \dots, n$ for a medium with $n+1$ layers. The source at ($x_0$, $y_0$) is fixed and therefore, $\partial x_0/\partial h_x = \partial x_0/\partial h_y = \partial y_0/\partial h_x = \partial y_0/\partial h_y$ = 0. Moreover, the receiver is located at ($x_{n+1}$, $y_{n+1}$) =  ($h_x + x_0$, $h_y + y_0$), which leads to $\partial x_{n+1}/\partial h_x = \partial y_{n+1}/\partial h_y = 1$ and $\partial y_{n+1}/\partial h_x = \partial x_{n+1}/\partial h_y = 0$. 
+
+Looking closer at equation~(\ref{eq:fermat3d2der}), we can see that at the first interface ($k=1$), we have four equations with eight unknowns: $\partial x_1/\partial h_x$, $\partial x_1/\partial h_y$, $\partial y_1/\partial h_x$, $\partial y_1/\partial h_y$, $\partial x_2/\partial h_x$, $\partial x_2/\partial h_y$, $\partial y_2/\partial h_x$, and $\partial y_2/\partial h_y$, which is different from the two-layer case in equation~(\ref{eq:fermat3d2der2l}) that only has four unknowns. In our previous consideration of 2D media (Appendix B), we show that this problem can be circumvented by considering the ratio $r_k$ (equation~(\ref{eq:rnl})) and formulating a recursive formula. However, it is not immediately apparent how the same strategy can be applied to the system of equations~(\ref{eq:fermat3d2der}) for the 3D media. Therefore, future investigations are required to properly handle this problem and come up with an efficient implementation scheme to analyze influences from lateral heterogeneity on time-processing parameters in 3D media. For example, we may choose to adopt the same strategy as in Appendix D that would allows us to rely on equation~(\ref{eq:fermat3d2der2l}) and approximately sum individual contributions. Finally, we note that the pertaining one-way traveltime derivatives in each layer --- another ingredient apart from the recursive formula--- can simply be obtained by extending equations~(\ref{eq:owtimehor}),~(\ref{eq:fperturb}), and~(\ref{eq:wperturb}) to 3D to also account for the $y$- direction. 
+
+
+\onecolumn
+\bibliographystyle{seg}
+\bibliography{review}
