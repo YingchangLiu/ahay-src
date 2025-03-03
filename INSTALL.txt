@@ -14,9 +14,9 @@ Prerequisites
    platforms. Madagascar supports both Python 2.7 and Python 3.
 
 For more information see:
-http://ahay.org/wiki/Main_Page
-http://ahay.org/wiki/Installation
-http://ahay.org/wiki/Advanced_Installation
+https://ahay.org/wiki/Main_Page
+https://ahay.org/wiki/Installation
+https://ahay.org/wiki/Advanced_Installation
 
 Software construction
 =====================
@@ -34,13 +34,13 @@ Software construction
       basic package, run
 
       ./configure --prefix=/directory/where/you/want/madagascar/installed \
-      API=fortran-90 
+      API=fortran-90
 
    2. Building and installing the package.
 
       Run "make install" or the following two commands in succession:
 
-      make 
+      make
       make install
 
       If you need "root" privileges for installing under $RSFROOT, you
@@ -62,18 +62,18 @@ Software construction
 
       source RSFROOT/share/madagascar/etc/env.sh
 
-      where RSFROOT is the install directory you specified in the --prefix 
+      where RSFROOT is the install directory you specified in the --prefix
       option to ./configure. If your shell is (t)csh, add to your $HOME/.cshrc
       file the line
 
       source RSFROOT/share/madagascar/etc/env.csh
 
-      Be aware that on some systems the default value for DATAPATH set in the 
-      script above may get automatically cleaned at some intervals, so if you 
-      want to keep your data binaries for a long time, set DATAPATH in your 
-      resource file to another location where you have write access and that 
-      allows large files. Remember that the value of DATAPATH should have a 
-      slash at the end. 
+      Be aware that on some systems the default value for DATAPATH set in the
+      script above may get automatically cleaned at some intervals, so if you
+      want to keep your data binaries for a long time, set DATAPATH in your
+      resource file to another location where you have write access and that
+      allows large files. Remember that the value of DATAPATH should have a
+      slash at the end.
 
 Testing Your Installation
 =========================
@@ -173,15 +173,15 @@ view it manually with:
 
 	scons view
 
-When an SConstruct file makes more than one graphics file, the  
+When an SConstruct file makes more than one graphics file, the
 
-	scons view 
+	scons view
 
-command will display all of them in sequence. 
+command will display all of them in sequence.
 
 Now edit the SConstruct file: change the title string on the
 Result line to "Hello World!", save the file, and rerun the scons
-command. 
+command.
 
 You will see that scons has figured out that the file
 filter.rsf does not need to be rebuilt because nothing that affects
