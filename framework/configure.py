@@ -1395,6 +1395,7 @@ def cuda(context):
             os.path.join('/opt', 'cuda_toolkit'),
             os.path.join('/opt', 'CUDA'),
             os.path.join('/opt', 'cuda'),
+            os.path.join('/usr', 'lib', 'cuda'),
             os.path.join('/usr', 'local', 'NVIDIA_CUDA_TOOLKIT'),
             os.path.join('/usr', 'local', 'CUDA_TOOLKIT'),
             os.path.join('/usr', 'local', 'cuda_toolkit'),
