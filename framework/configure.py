@@ -706,7 +706,7 @@ pkg['netpbm'] = {'cygwin':'libnetpbm-devel (Setup...Devel)',
                  'centos':'netpbm-devel',
                  'suse'  :'libnetpbm-devel',
                  'gentoo':'media-libs/netpbm',
-                 'ubuntu':'libnetpbm10-dev'}
+                 'ubuntu':'libnetpbm11-dev'}
 
 def ppm(context):
     context.Message("checking for ppm ... ")
