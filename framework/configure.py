@@ -1418,7 +1418,8 @@ def cuda(context):
             return
 
     path = ':'.join([os.environ['PATH'],os.path.join(CUDA_TOOLKIT_PATH,'bin')])
-    nvcc = context.env.get('NVCC',WhereIs('nvcc',path))
+    nvcc = context.env.get('NVCC',WhereIs('nvcc',path)) or \
+              context.env.get('NVCC',WhereIs('nvcc')) # try without path if not found nvcc
     cudaflags = context.env.get('CUDAFLAGS','--x=cu')
     if nvcc:
         context.Message("checking if %s works ... " % nvcc)
