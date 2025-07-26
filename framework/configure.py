@@ -1315,7 +1315,9 @@ def mpi(context):
         }\n'''
         cc = context.env.get('CC')
         context.env['CC'] = mpicc
-        context.env.Append(ENV={'MPICH_CC':cc,'MPICH_CLINKER':cc})
+        context.env.Append(ENV={'MPICH_CC':cc,
+                                'MPICH_CLINKER':cc,
+                                'HOME': os.environ.get('HOME')})
         res = context.TryLink(text,'.c')
         context.env['CC'] = cc
         if res:
@@ -1346,7 +1348,8 @@ def mpi(context):
         }\n'''
         cxx = context.env.get('CXX')
         context.env['CXX'] = mpicxx
-        context.env.Append(ENV={'MPICH_CXX':cxx})
+        context.env.Append(ENV={'MPICH_CXX':cxx,
+                                'HOME': os.environ.get('HOME')})
         res = context.TryLink(text,'.cc')
         context.env['CXX'] = cxx
         if res:
