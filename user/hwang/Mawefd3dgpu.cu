@@ -39,6 +39,8 @@ extern "C" {
 #include <rsf.h>
 }
 #include <cuda.h>
+#include <cuda_runtime.h>
+#include <device_launch_parameters.h>
 
 typedef struct Grid3d grid3d; 
 typedef struct LinearWeit3d weit3d; 
@@ -56,8 +58,13 @@ struct LinearWeit3d { /* linear interpolation weights for src/rec mapping */
 
 __constant__ float d_fdcoef[13];
 __constant__ float cz1,cz2,cz3,cz4,cx1,cx2,cx3,cx4,cy1,cy2,cy3,cy4;
-texture<float,1> tex_v;
-texture<float,1> tex_d;
+//texture<float,1> tex_v;
+//texture<float,1> tex_d;
+cudaTextureObject_t tex_v;    // 纹理对象  
+cudaTextureObject_t tex_d;    // 纹理对象  
+__constant__ cudaTextureObject_t d_tex_v;
+__constant__ cudaTextureObject_t d_tex_d;
+
 
 void cut_wave(float*** ucut, float*** uin, int nz, int nx, int ny, int nbd);
 void expand_domain(float*** vtmp, float*** v, int nz, int nx, int ny, int nbd);
@@ -305,10 +312,32 @@ main(int argc, char** argv)
   gpu_errchk( cudaMemcpyToSymbol(cy3,&h_cy3,sizeof(float),0,cudaMemcpyHostToDevice) );
   gpu_errchk( cudaMemcpyToSymbol(cy4,&h_cy4,sizeof(float),0,cudaMemcpyHostToDevice) );
   gpu_errchk( cudaMemcpy(d_vel,vel[0][0],memsize,cudaMemcpyHostToDevice) );
-  gpu_errchk( cudaBindTexture(0,tex_v,d_vel,memsize) );
+
+
+ // gpu_errchk( cudaBindTexture(0,tex_v,d_vel,memsize) );
+ // 创建 velocity 的纹理对象  
+cudaResourceDesc resDescV = {};  
+resDescV.resType = cudaResourceTypeLinear;  
+resDescV.res.linear.devPtr        = d_vel;  
+resDescV.res.linear.sizeInBytes   = memsize;  
+resDescV.res.linear.desc          = cudaCreateChannelDesc<float>();  
+cudaTextureDesc texDesc = {};  
+texDesc.readMode = cudaReadModeElementType;  
+gpu_errchk( cudaCreateTextureObject(&tex_v, &resDescV, &texDesc, nullptr) );  
+gpu_errchk( cudaMemcpyToSymbol(d_tex_v, &tex_v, sizeof(tex_v)) );  
+
   if (!cden) {
     gpu_errchk( cudaMemcpy(d_den,den[0][0],memsize,cudaMemcpyHostToDevice) );
-    gpu_errchk( cudaBindTexture(0,tex_d,d_den,memsize) );
+    //gpu_errchk( cudaBindTexture(0,tex_d,d_den,memsize) );
+   // 创建 density 的纹理对象  
+   cudaResourceDesc resDescD = {};  
+   resDescD.resType = cudaResourceTypeLinear;  
+   resDescD.res.linear.devPtr        = d_den;  
+   resDescD.res.linear.sizeInBytes   = memsize;  
+   resDescD.res.linear.desc          = cudaCreateChannelDesc<float>();  
+   gpu_errchk( cudaCreateTextureObject(&tex_d, &resDescD, &texDesc, nullptr) );  
+     gpu_errchk( cudaMemcpyToSymbol(d_tex_d, &tex_d, sizeof(tex_d)) );  
+
   }
   int n1_threads = 32;
   int n2_threads = 16;
@@ -584,7 +613,9 @@ step_forward_kernel(float* d_u0, float* d_u1, int n1, int n2, int n3, bool cden)
     __syncthreads();  /*wait for all threads finish loading*/
 
     /*fd evolve one time step*/
-    float vv = tex1Dfetch(tex_v,out_idx);
+    //float vv = tex1Dfetch<float>(tex_v,out_idx);
+    float vv = tex1Dfetch<float>(d_tex_v, out_idx);
+
     d_u0[out_idx] = 2.f*current - d_u0[out_idx] +
               vv*(current*d_fdcoef[0] + 
               (s_u[t_idx+1] + s_u[t_idx-1])*d_fdcoef[1] +
@@ -600,18 +631,18 @@ step_forward_kernel(float* d_u0, float* d_u1, int n1, int n2, int n3, bool cden)
               (behind3 + infront3)*d_fdcoef[11] +
               (behind4 + infront4)*d_fdcoef[12] );
     if (!cden) {  /* variable density term grad(\rho) \cdot grad(u)*/
-      float grad_d_y = ( tex1Dfetch(tex_d,out_idx+4*stride) - tex1Dfetch(tex_d,out_idx-4*stride) )*cy4 +
-                       ( tex1Dfetch(tex_d,out_idx+3*stride) - tex1Dfetch(tex_d,out_idx-3*stride) )*cy3 +
-                       ( tex1Dfetch(tex_d,out_idx+2*stride) - tex1Dfetch(tex_d,out_idx-2*stride) )*cy2 +
-                       ( tex1Dfetch(tex_d,out_idx+  stride) - tex1Dfetch(tex_d,out_idx-1*stride) )*cy1 ;
-      float grad_d_x = ( tex1Dfetch(tex_d,out_idx+4*n1) - tex1Dfetch(tex_d,out_idx-4*n1) )*cx4 +
-                       ( tex1Dfetch(tex_d,out_idx+3*n1) - tex1Dfetch(tex_d,out_idx-3*n1) )*cx3 +
-                       ( tex1Dfetch(tex_d,out_idx+2*n1) - tex1Dfetch(tex_d,out_idx-2*n1) )*cx2 +
-                       ( tex1Dfetch(tex_d,out_idx+  n1) - tex1Dfetch(tex_d,out_idx-  n1) )*cx1 ;
-      float grad_d_z = ( tex1Dfetch(tex_d,out_idx+4) - tex1Dfetch(tex_d,out_idx-4) )*cz4 +
-                       ( tex1Dfetch(tex_d,out_idx+3) - tex1Dfetch(tex_d,out_idx-3) )*cz3 +
-                       ( tex1Dfetch(tex_d,out_idx+2) - tex1Dfetch(tex_d,out_idx-2) )*cz2 +
-                       ( tex1Dfetch(tex_d,out_idx+1) - tex1Dfetch(tex_d,out_idx-1) )*cz1 ;
+      float grad_d_y = ( tex1Dfetch<float>(d_tex_d,out_idx+4*stride) - tex1Dfetch<float>(d_tex_d,out_idx-4*stride) )*cy4 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+3*stride) - tex1Dfetch<float>(d_tex_d,out_idx-3*stride) )*cy3 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+2*stride) - tex1Dfetch<float>(d_tex_d,out_idx-2*stride) )*cy2 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+  stride) - tex1Dfetch<float>(d_tex_d,out_idx-1*stride) )*cy1 ;
+      float grad_d_x = ( tex1Dfetch<float>(d_tex_d,out_idx+4*n1) - tex1Dfetch<float>(d_tex_d,out_idx-4*n1) )*cx4 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+3*n1) - tex1Dfetch<float>(d_tex_d,out_idx-3*n1) )*cx3 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+2*n1) - tex1Dfetch<float>(d_tex_d,out_idx-2*n1) )*cx2 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+  n1) - tex1Dfetch<float>(d_tex_d,out_idx-  n1) )*cx1 ;
+      float grad_d_z = ( tex1Dfetch<float>(d_tex_d,out_idx+4) - tex1Dfetch<float>(d_tex_d,out_idx-4) )*cz4 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+3) - tex1Dfetch<float>(d_tex_d,out_idx-3) )*cz3 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+2) - tex1Dfetch<float>(d_tex_d,out_idx-2) )*cz2 +
+                       ( tex1Dfetch<float>(d_tex_d,out_idx+1) - tex1Dfetch<float>(d_tex_d,out_idx-1) )*cz1 ;
       float grad_u_z = (s_u[t_idx+1] - s_u[t_idx-1])*cz1 +
                        (s_u[t_idx+2] - s_u[t_idx-2])*cz2 +
                        (s_u[t_idx+3] - s_u[t_idx-3])*cz3 +
@@ -626,7 +657,7 @@ step_forward_kernel(float* d_u0, float* d_u1, int n1, int n2, int n3, bool cden)
                        (behind4 - infront4)*cy4 ;
       d_u0[out_idx] -= vv*(grad_u_z*grad_d_z + 
                         grad_u_x*grad_d_x + 
-                        grad_u_y*grad_d_y)/tex1Dfetch(tex_d,out_idx);
+                        grad_u_y*grad_d_y)/tex1Dfetch<float>(d_tex_d,out_idx);
     }
   }
   return;
@@ -641,7 +672,7 @@ inject_source_kernel(float* d_u0, float wt, weit3d d_weit_s,
   int i3 = blockIdx.z;
   int idx = (i3*n2+i2)*n1+i1;
 
-  wt *= tex1Dfetch(tex_v,idx);
+  wt *= tex1Dfetch<float>(d_tex_v,idx);
 
   float w[9];
   w[0] = d_weit_s.slice0[0][0]*wt;
@@ -691,12 +722,12 @@ make_abc3d_z_kernel(float* d_bzl, float* d_bzh, float dz,
 
   int bz_idx = i2*nxpad+i1;
   int v_idx = (i2*nxpad+i1)*nzpad+nbd;
-  float d = tex1Dfetch(tex_v,v_idx);
+  float d = tex1Dfetch<float>(d_tex_v,v_idx);
   d = sqrtf(d)/dz;
   d_bzl[bz_idx] = (1.f-d)/(1.f+d);
 
   v_idx = (i2*nxpad+i1)*nzpad+nzpad-1-nbd;
-  d = tex1Dfetch(tex_v,v_idx);
+  d = tex1Dfetch<float>(d_tex_v,v_idx);
   d = sqrtf(d)/dz;
   d_bzh[bz_idx] = (1.f-d)/(1.f+d);
 }
@@ -710,12 +741,12 @@ make_abc3d_x_kernel(float* d_bxl, float* d_bxh, float dx,
 
   int bx_idx = i2*nzpad+i1;
   int v_idx = (i2*nxpad+nbd)*nzpad+i1; 
-  float d = tex1Dfetch(tex_v,v_idx);
+  float d = tex1Dfetch<float>(d_tex_v,v_idx);
   d = sqrtf(d)/dx;
   d_bxl[bx_idx] = (1.f-d)/(1.f+d);
 
   v_idx = (i2*nxpad+nxpad-1-nbd)*nzpad+i1;
-  d = tex1Dfetch(tex_v,v_idx);
+  d = tex1Dfetch<float>(d_tex_v,v_idx);
   d = sqrtf(d)/dx;
   d_bxh[bx_idx] = (1.f-d)/(1.f+d);
 }
@@ -729,12 +760,12 @@ make_abc3d_y_kernel(float* d_byl, float* d_byh, float dy,
 
   int by_idx = i2*nzpad+i1;
   int v_idx = (nbd*nxpad+i2)*nzpad+i1;
-  float d = tex1Dfetch(tex_v,v_idx);
+  float d = tex1Dfetch<float>(d_tex_v,v_idx);
   d = sqrtf(d)/dy;
   d_byl[by_idx] = (1.f-d)/(1.f+d);
 
   v_idx = ((nypad-1-nbd)*nxpad+i2)*nzpad+i1;
-  d = tex1Dfetch(tex_v,v_idx);
+  d = tex1Dfetch<float>(d_tex_v,v_idx);
   d = sqrtf(d)/dy;
   d_byh[by_idx] =(1.f-d)/(1.f+d);
 }
