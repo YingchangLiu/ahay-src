@@ -16,14 +16,15 @@ CXX=g++-11
 F77=gfortran-11
 FORTRAN=gfortran-11
 F90=gfortran-11
-
-## Specify the CUDA flags
-CUDAFLAGS='-x cu --compiler-bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/11/ -ccbin=/usr/bin/g++-11'
-
+#CC=gcc
+#CXX=g++
+#F77=gfortran
+#FORTRAN=gfortran
+#F90=gfortran
 
 
 ## Configure madagascar
-./configure API=$API --prefix=$prefix CC=$CC CXX=$CXX F77=$F77 FORTRAN=$FORTRAN F90=$F90 CUDAFLAGS=$CUDAFLAGS
+./configure API=$API --prefix=$prefix CC=$CC CXX=$CXX F77=$F77 FORTRAN=$FORTRAN F90=$F90 #CUDAFLAGS=$CUDAFLAGS
 ## Full configuration command for reference
 ## ./configure CC=gcc-11 CXX=g++-11 F77=gfortran-11 FORTRAN=gfortran-11 F90=gfortran-11 CUDAFLAGS='-x cu --compiler-bindir=/usr/x86_64-pc-linux-gnu/gcc-bin/11/ -ccbin=/usr/bin/g++-11' API=c++,f90
 
